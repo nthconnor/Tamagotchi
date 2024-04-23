@@ -1,0 +1,60 @@
+body {
+  text-align: center;
+  background: #ffffff;
+  height: 100%;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 60px;
+  background: -webkit-linear-gradient(#f2ffbf, #7bd1f3, #e67eca);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 100px auto;
+}
+
+#game {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #228bdb;
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
+}
+
+#statBox {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    color: #228bdb;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 6px;
+    left: 8px;
+    text-align: start;
+}
+
+.stat {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.button {
+  background: #ffffff;
+  font-family: "helvetica";
+  /* font-weight: bold; */
+  color: #228bdb;
+  background: #ffffff;
+  border: 2px solid #228bdb;
+  border-radius: 10px;
+  padding: 8px;
+  position: relative;
+  top: 283px;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #d4d4d4;
+}
