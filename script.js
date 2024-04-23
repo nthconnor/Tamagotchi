@@ -7,10 +7,10 @@
     - pet can evolve at level 5
 - ???
 */
-let hungerText = document.getElementById('hungerText');
-let sleepyText = document.getElementById('sleepyText');
-let boredomText = document.getElementById('boredomText');
-let nameTxt = document.getElementById('nameText');
+let hungerText = document.getElementById("hungerText");
+let sleepyText = document.getElementById("sleepyText");
+let boredomText = document.getElementById("boredomText");
+let nameTxt = document.getElementById("nameText");
 let minutes = 0;
 let seconds = 0;
 time();
@@ -35,18 +35,16 @@ class Tamagotchi {
 }
 
 function time() {
-    setInterval(function () {
-      if (seconds < 10 && minutes < 10) {
-        document.getElementById("clock").innerHTML =
-          "0" + minutes + ":0" + seconds;
-      } else {
-        document.getElementById("clock").innerHTML =
-          "0" + minutes + ":" + seconds;
-      }
-      seconds++;
-      if (seconds === 60) {
-        seconds = 0;
-        minutes += 1;
-      }
-    }, 1000);
-  }
+  setInterval(function () {
+    if (seconds < 10 && minutes < 10) {
+      document.getElementById("clock").innerHTML = minutes + ":0" + seconds;
+    } else {
+      document.getElementById("clock").innerHTML = minutes + ":" + seconds;
+    }
+    seconds++;
+    if (seconds === 60) {
+      seconds = 0;
+      minutes += 1;
+    }
+  }, 1000);
+}
