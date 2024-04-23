@@ -10,10 +10,16 @@
   <body>
     <h1>TAMAGOTCHI</h1>
     <div id="game">
+      <div id="clock">00:00</div>
       <div id="statBox">
-        <span id="hunger" class="stat">HUNGER: </span>
-        <span id="sleepy" class="stat">SLEEPINESS: </span>
-        <span id="boredom" class="stat">BOREDOM: </span>
+        <!-- placeholder - might use progress bars  -->
+        <span id="hunger" class="stat">HUNGER: <span id="hungerText"></span></span>
+        <span id="sleepy" class="stat">SLEEPINESS: <span id="sleepyText"></span></span>
+        <span id="boredom" class="stat">BOREDOM: <span id="boredomText"></span></span>
+      </div>
+      <div id="nameAge">
+        <span>Lvl: <span id="lvlText"></span></span>
+        <span>Name: <span id="nameText"></span></span>
       </div>
       <button class="button" id="feedButton">FEED</button>
       <button class="button" id="playButton">PLAY</button>
