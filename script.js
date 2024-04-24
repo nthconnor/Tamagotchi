@@ -7,13 +7,16 @@
     - pet can evolve at level 5
 - ???
 */
-let hungerText = document.getElementById("hungerText");
-let sleepyText = document.getElementById("sleepyText");
-let boredomText = document.getElementById("boredomText");
-let nameTxt = document.getElementById("nameText");
+const hungerText = document.getElementById("hungerText");
+const sleepyText = document.getElementById("sleepyText");
+const boredomText = document.getElementById("boredomText");
+const nameTxt = document.getElementById("name");
+const begin = document.getElementById("begin");
+const nameInput = document.getElementById("username");
 let minutes = 0;
 let seconds = 0;
-time();
+// nameTxt.innerText = nameInput;
+begin.onclick = startGame;
 
 // Create a pet class with name/level/hunger/boredom/sleepiness
 class Tamagotchi {
@@ -35,16 +38,33 @@ class Tamagotchi {
 }
 
 function time() {
-  setInterval(function () {
-    if (seconds < 10 && minutes < 10) {
-      document.getElementById("clock").innerHTML = minutes + ":0" + seconds;
-    } else {
-      document.getElementById("clock").innerHTML = minutes + ":" + seconds;
-    }
-    seconds++;
-    if (seconds === 60) {
-      seconds = 0;
-      minutes += 1;
-    }
-  }, 1000);
+  setInterval(changeTime, 1000);
+}
+
+function changeTime() {
+  if (seconds < 10 && minutes < 10) {
+    document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
+  } else {
+    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+  }
+  seconds++;
+  if (seconds === 60) {
+    seconds = 0;
+    minutes += 1;
+  }
+}
+
+// function to run on 'start' button click
+function startGame() {
+  displayOn();
+  time();
+}
+//turn on #background/#timer/#statBox/#nameAge/clock/#userInput
+function displayOn() {
+  document.getElementById("background").style.display = "block";
+  document.getElementById("timer").style.display = "block";
+  document.getElementById("statBox").style.display = "block";
+  document.getElementById("nameAge").style.display = "block";
+  document.getElementById("buttonContainer").style.display = "block";
+  document.getElementById("userInput").style.display = "none";
 }
