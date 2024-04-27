@@ -3,44 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Tamagotchi</title>
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
   </head>
-  <body>
-    <h1>TAMAGOTCHI</h1>
-    <div id="game">
-      <div id="background"></div>
-      <div id="timer">0:00</div>
-      <div id="statBox">
-        <!-- placeholder - might use progress bars  -->
-        <span id="hunger" class="stat"
-          >HUNGER: <span id="hungerText"></span
-        ></span>
-        <span id="sleepy" class="stat"
-          >SLEEPINESS: <span id="sleepyText"></span
-        ></span>
-        <span id="boredom" class="stat"
-          >BOREDOM: <span id="boredomText"></span
-        ></span>
+  <body class="dark_mode">
+    <main>
+      <div id="name_level">
+        <span id="nameText">name</span>
+        <span id="level">level <span id="levelText"></span></span>
       </div>
-      <div id="nameAge">
-        <span id="name">name</span>
-        <span>LVL <span id="lvlText"></span></span>
+      <div id="stats">
+        <img
+          src="./assets/icons8-eat-50.png"
+          alt="plate with fork and knife icons"
+          id="hungerIcon"
+          class="icon"
+        /><span id="hungerText">0</span>
+        <img
+          src="./assets/icons8-sleep-50.png"
+          alt="zzz icon"
+          id="sleepIcon"
+          class="icon"
+        /><span id="sleepyText">0</span>
+        <img
+          src="./assets/icons8-bored-48.png"
+          alt="bored face icon"
+          id="boredomIcon"
+          class="icon"
+        /><span id="boredomText">0</span>
       </div>
-      <div id="userInput">
-        <label for="username">Choose a name..</label>
-        <input type="text" id="username" required />
-        <button type="submit" id="begin" class="button">BEGIN</button>
+      <div id="game">
+        <div id="background"></div>
+        <div id="timer">0:00</div>
+        <div id="userInputDiv">
+          <label for="username"></label>
+          <input type="text" id="username" required />
+          <button type="submit" id="startButton" class="button">begin</button>
+        </div>
+        <div id="spriteBox">
+          <img src="assets/Pink_Monster.png" id="sprite" />
+        </div>
+        <div id="buttonDiv">
+          <button class="button" id="feedButton">feed</button>
+          <button class="button" id="lightButton">
+            lights : <span id="onOff">on</span>
+          </button>
+          <button class="button" id="playButton">play</button>
+        </div>
       </div>
-      <div id="spriteBox"></div>
-    </div>
-    <div id="buttonContainer">
-      <button class="button" id="feedButton">FEED</button>
-      <button class="button" id="lightButton">
-        LIGHTS: <span id="onOff">ON</span>
-      </button>
-      <button class="button" id="playButton">PLAY</button>
-    </div>
+    </main>
   </body>
 </html>

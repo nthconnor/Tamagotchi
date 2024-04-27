@@ -1,151 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+
 body {
   text-align: center;
-  background: #ffffff;
   height: 100%;
+  background: #f3fdff;
+  font-family: "VT323";
 }
 
-h1 {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 70px;
-  background: -webkit-linear-gradient(#f2ffbf, #80dbff, #ffc8ff);
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 80px auto;
+.dark_mode body {
+  background: #262a2d;
+  visibility: hidden;
 }
 
+/* Game window/background styling */
 #game {
   display: inline-block;
   justify-content: center;
   align-items: center;
   /* border: 2px solid #228bdb; */
-  border: 2px solid #228bdb;
-  width: 450px;
+  border: 2px solid #85c0ff;
+  width: 325px;
   height: 300px;
-  border-radius: 10px;
+  border-radius: 80px;
   background-color: none;
   position: relative;
+  top: 250px;
+}
+
+#spriteBox {
+  display: block;
+  visibility: hidden;
+  height: auto;
+  width: auto;
+  position: absolute;
+  top: 250px;
+  right: 210px;
 }
 
 #background {
   background: url("./assets/tamagotchiBack.gif") center center no-repeat;
   background-size: cover;
-  border-radius: 7px;
+  border-radius: 77px;
   width: 100%;
   height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
+  visibility: hidden;
+  filter: contrast(80%) brightness(125%);
 }
 
+/* Stat/Info display styling */
 #timer {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 18px;
-  color: #1a5f93;
+  font-size: 25px;
+  color: #125f9b;
   position: relative;
   top: 10px;
-  /* display: block; */
-  display: none;
+  display: block;
+  visibility: hidden;
 }
 
-#statBox {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #11436ad6;
-  border-radius: 5px;
-  padding: 4px;
-  width: 110px;
-  font-size: 12px;
-  line-height: 16px;
-  color: #84caff;
-  display: none;
-  /* display: flex; */
-  /* flex-direction: column; */
-  position: relative;
-  top: -12px;
-  left: 7px;
-  text-align: start;
-  font-style: italic;
-  font-weight: bold;
-}
-
-#nameAge {
-  background-color: #0d324fd6;
-  border-radius: 5px;
-  width: 50px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 12px;
-  line-height: 20px;
-  color: #84caff;
-  display: none;
-  /* display: block;
-  flex-direction: column; */
-  position: relative;
-  top: -69px;
-  left: 384px;
-  text-align: start;
-  font-style: italic;
-  font-weight: bold;
-  padding: 4px;
-}
-
-#userInput {
+/* Icon Styling for the stats*/
+#name_level {
+  font-size: 22px;
+  color: #1f94ee;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 100px;
+  top: 225px;
+  visibility: hidden;
 }
 
-#userInput label {
+.icon {
+  filter: opacity(0.3) drop-shadow(0 0 0 rgba(21, 161, 255, 0.978));
+  width: 25px;
+  height: 100%;
+  margin-right: 5px;
+  margin-left: 25px;
+}
+
+#sleepIcon {
+  height: 20px;
+  width: 20px;
+}
+
+#stats {
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
+  display: flex;
+  visibility: hidden;
+  font-size: 15px;
+  color: #1f94ee;
+  justify-content: left;
+  align-items: center;
+  position: relative;
+  width: 215px;
+  top: 240px;
+  font-weight: bold;
+}
+
+/* Input field/label/submit button styling*/
+#userInputDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 80px;
+  margin: 0 auto;
+  font-size: 20px;
+  visibility: visible;
+}
+
+#userInputDiv label {
   color: #228bdb;
   font-weight: bold;
-}
-
-#username {
-  height: 25px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 16px;
 }
 
 #username {
   margin: 10px auto;
-  border: 2px solid #228bdb;
+  border: 2px solid #64bcff;
   border-radius: 5px;
-  background-color: #ffffff;
+  background: #f3fdff;
   color: #228bdb;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* BUTTON STYLING  */
-.button {
-  background: #ffffff;
-  font-family: "helvetica";
-  /* font-weight: bold; */
-  color: #228bdb;
-  background: #ffffff;
-  border: 2px solid #228bdb;
-  border-radius: 5px;
-  padding: 7px;
+#buttonDiv {
   position: relative;
-  font-weight: bold;
-  margin: 0px 10px 0px 10px;
+  top: 175px;
+  display: inline-block;
+  visibility: hidden;
 }
 
-#buttonContainer {
+.button {
+  font-family: "VT323";
+  font-size: 16px;
+  background: #ffffff;
+  /* font-weight: bold; */
+  color: #8e8d65;
+  background-color: #fffa9d;
+  border: 2px solid #e4e49c;
+  border-radius: 10px;
+  padding: 4px;
   position: relative;
-  margin: 20px auto;
-  /* display: block; */
-  display: none;
 }
 
 .button:hover {
-  background-color: #00000013;
+  background-color: #fff8d4;
 }
 
 .button:active {
-  background-color: #228bdb;
+  background-color: #b6b2a6;
+  border: 2px solid #8e8d65;
 }

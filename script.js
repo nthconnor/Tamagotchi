@@ -1,70 +1,223 @@
-/* 
-- create a class to hold game/pet information and methods
-- create functional buttons to control feed/play/lights
-- create multiple values for hunger/boredom/sleepiness/level
-- create a clock (hh:mm) where minutes pass in seconds
-- have our pet values change with time
-    - pet can evolve at level 5
-- ???
-*/
+const game = document.getElementById("game");
+const spriteBox = document.getElementById("spriteBox");
+const background = document.getElementById("background");
+const timer = document.getElementById("timer");
+const stats = document.getElementById("stats");
+const name_level = document.getElementById("name_level");
+const userInputDiv = document.getElementById("userInputDiv");
+const buttonDiv = document.getElementById("buttonDiv");
+const startButton = document.getElementById("startButton");
+const nameInput = document.getElementById("username");
+const nameText = document.getElementById("nameText");
+const levelText = document.getElementById("levelText");
 const hungerText = document.getElementById("hungerText");
 const sleepyText = document.getElementById("sleepyText");
 const boredomText = document.getElementById("boredomText");
-const nameTxt = document.getElementById("name");
-const begin = document.getElementById("begin");
-const nameInput = document.getElementById("username");
-let minutes = 0;
-let seconds = 0;
-// nameTxt.innerText = nameInput;
-begin.onclick = startGame;
+const lightButton = document.getElementById("lightButton");
+const lightButtonText = document.getElementById("onOff");
+const feedButton = document.getElementById("feedButton");
+const playButton = document.getElementById("playButton");
+let gameRunning;
+let seconds;
+let minutes;
+let myTamagotchi;
 
-// Create a pet class with name/level/hunger/boredom/sleepiness
 class Tamagotchi {
   constructor(name) {
     this.name = name;
-    this.level = 0;
+    this.level = 1;
     this.hunger = 0;
-    this.boredom = 0;
     this.sleepiness = 0;
+    this.boredom = 0;
   }
   levelUp() {
-    // conditional statement to see if time is at a 00:30 interval (adjust increment for testing)
-    // let lvlText = document.getElementById('lvlText');
-    // if (seconds === 30) {
-    //     level += 1
-    //     lvlText.innerHTML = this.level;
-    // }
+    this.level += 1;
+    this.updateStats();
+    if (!gameRunning) {
+      return;
+    }
+  }
+  hungerUp() {
+    this.hunger += 1;
+    this.updateStats();
+    if (!gameRunning) {
+      return;
+    }
+  }
+  sleepinessUp() {
+    this.sleepiness += 1;
+    this.updateStats();
+    if (!gameRunning) {
+      return;
+    }
+  }
+  boredomUp() {
+    this.boredom += 1;
+    this.updateStats();
+    if (!gameRunning) {
+      return;
+    }
+  }
+  feed() {
+    if (this.hunger > 0) {
+      this.hunger -= 1;
+      this.updateStats();
+    }
+  }
+  sleep() {
+    if (this.sleepiness > 0) {
+      this.sleepiness -= 1;
+      this.updateStats();
+    }
+  }
+  play() {
+    if (this.boredom > 0) {
+      this.boredom -= 1;
+      this.updateStats();
+    }
+  }
+  updateStats() {
+    if (!gameRunning) {
+      return;
+    }
+    levelText.innerHTML = this.level;
+    hungerText.innerHTML = this.hunger;
+    sleepyText.innerHTML = this.sleepiness;
+    boredomText.innerHTML = this.boredom;
   }
 }
 
-function time() {
-  setInterval(changeTime, 1000);
+//
+chooseName();
+
+// buttons
+startButton.onclick = startGame;
+lightButton.onclick = function() {
+  toggleDarkMode();
+  myTamagotchi.sleep();
+}
+feedButton.onclick = function () {
+  myTamagotchi.feed();
+};
+playButton.onclick = function() {
+  myTamagotchi.play();
 }
 
-function changeTime() {
-  if (seconds < 10 && minutes < 10) {
-    document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
-  } else {
-    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
-  }
-  seconds++;
-  if (seconds === 60) {
-    seconds = 0;
-    minutes += 1;
+// Create a function that will update stat values at randomized intervals
+function statIntervals() {
+  levelInterval = setInterval(function () {
+    myTamagotchi.levelUp();
+    endCondition();
+  }, 30000);
+  hungerInterval = setInterval(function () {
+    myTamagotchi.hungerUp();
+    myTamagotchi.updateStats();
+    endCondition();
+  }, Math.floor(Math.random() * (6000 - 3000) + 3000));
+  sleepinessInterval = setInterval(function () {
+    myTamagotchi.sleepinessUp();
+    endCondition();
+  }, Math.floor(Math.random() * (6000 - 3000) + 3000));
+  boredomInterval = setInterval(function () {
+    myTamagotchi.boredomUp();
+    endCondition();
+  }, Math.floor(Math.random() * (6000 - 3000) + 3000));
+}
+
+// use this somewhere it's repeatedly checked for the loss condition
+function endCondition() {
+  if (
+    myTamagotchi.hunger === 10 ||
+    myTamagotchi.sleepiness === 10 ||
+    myTamagotchi.boredom === 10
+  ) {
+    gameRunning = false;
   }
 }
 
 // function to run on 'start' button click
 function startGame() {
-  displayOn();
-  time();
+  const name = nameInput.value;
+  myTamagotchi = new Tamagotchi(name);
+  // turn on display of game info
+  (function displayOn() {
+    background.style.visibility = "visible";
+    timer.style.visibility = "visible";
+    spriteBox.style.visibility = "visible";
+    stats.style.visibility = "visible";
+    name_level.style.visibility = "visible";
+    buttonDiv.style.visibility = "visible";
+    userInputDiv.style.visibility = "hidden";
+  })();
+  // initialize all stat values, gameRunning to true
+  (function initialize() {
+    seconds = 0;
+    minutes = 0;
+    gameRunning = true;
+    nameText.innerHTML = myTamagotchi.name;
+    levelText.innerHTML = myTamagotchi.level;
+    hungerText.innerHTML = myTamagotchi.hunger;
+    sleepyText.innerHTML = myTamagotchi.sleepiness;
+    boredomText.innerHTML = myTamagotchi.boredom;
+  })();
+  // starting time and stat intervals on game start
+  startTimer();
+  statIntervals();
 }
-//turn on #background/#timer/#statBox/#nameAge/clock/#userInput
-function displayOn() {
-  document.getElementById("background").style.display = "block";
-  document.getElementById("timer").style.display = "block";
-  document.getElementById("statBox").style.display = "block";
-  document.getElementById("nameAge").style.display = "block";
-  document.getElementById("buttonContainer").style.display = "block";
-  document.getElementById("userInput").style.display = "none";
+
+// function to "type out" intro text
+function chooseName() {
+  let i = 0;
+  let text = "choose a name";
+  const label = document.querySelector("label");
+  // adds a letter to the string with short delay
+  function addLetter() {
+    if (i < text.length) {
+      label.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(addLetter, 90);
+    } else {
+      setTimeout(removeDots, 500);
+    }
+  }
+  // create a function to clear 3 dots and then call addDots
+  function removeDots() {
+    const currentText = label.innerHTML;
+    if (currentText.endsWith("...")) {
+      label.innerHTML = currentText.slice(0, -3);
+      setTimeout(addDots, 500);
+    } else {
+      addDots();
+    }
+  }
+  // function to add 3 dots to end of string
+  function addDots() {
+    label.innerHTML += ".";
+    setTimeout(removeDots, 500);
+  }
+
+  addLetter();
+}
+
+function startTimer() {
+  setInterval(changeTime, 1000);
+}
+
+function changeTime() {
+  seconds++
+  if (seconds < 10) {
+    document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
+  } else {
+    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+  }
+  if (seconds === 60) {
+    seconds = 0;
+    minutes += 1;
+  }
+  console.log(seconds)
+}
+
+// be able to toggle a "dark mode" when light switch is off - WIP
+function toggleDarkMode() {
+  document.body.classList.toggle("dark_mode");
 }
