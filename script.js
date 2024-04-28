@@ -21,6 +21,12 @@ let gameRunning;
 let seconds;
 let minutes;
 let myTamagotchi;
+let lights;
+let levelInterval;
+let hungerInterval;
+let sleepingInterval;
+let sleepinessInterval;
+let boredomInterval;
 
 class Tamagotchi {
   constructor(name) {
@@ -45,8 +51,10 @@ class Tamagotchi {
     }
   }
   sleepinessUp() {
-    this.sleepiness += 1;
-    this.updateStats();
+    if (lights === "on") {
+      this.sleepiness += 1;
+      this.updateStats();
+    }
     if (!gameRunning) {
       return;
     }
@@ -61,6 +69,7 @@ class Tamagotchi {
   feed() {
     if (this.hunger > 0) {
       this.hunger -= 1;
+      this.sleepiness += 1;
       this.updateStats();
     }
   }
@@ -73,6 +82,7 @@ class Tamagotchi {
   play() {
     if (this.boredom > 0) {
       this.boredom -= 1;
+      this.hunger += 1;
       this.updateStats();
     }
   }
@@ -89,19 +99,28 @@ class Tamagotchi {
 
 //
 chooseName();
+!toggleDarkMode();
 
 // buttons
 startButton.onclick = startGame;
-lightButton.onclick = function() {
+// lowers sleepiness when dark mode is toggled
+lightButton.onclick = function () {
   toggleDarkMode();
-  myTamagotchi.sleep();
-}
+  if (lights === "off") {
+    sleepingInterval = setInterval(() => {
+      myTamagotchi.sleep();
+    }, 1000);
+    myTamagotchi.sleep();
+  } else clearInterval(sleepingInterval)
+};
+
 feedButton.onclick = function () {
   myTamagotchi.feed();
 };
-playButton.onclick = function() {
+
+playButton.onclick = function () {
   myTamagotchi.play();
-}
+};
 
 // Create a function that will update stat values at randomized intervals
 function statIntervals() {
@@ -154,11 +173,13 @@ function startGame() {
     seconds = 0;
     minutes = 0;
     gameRunning = true;
+    lights = "on";
     nameText.innerHTML = myTamagotchi.name;
     levelText.innerHTML = myTamagotchi.level;
     hungerText.innerHTML = myTamagotchi.hunger;
     sleepyText.innerHTML = myTamagotchi.sleepiness;
     boredomText.innerHTML = myTamagotchi.boredom;
+    lightButtonText.innerHTML = "on";
   })();
   // starting time and stat intervals on game start
   startTimer();
@@ -204,7 +225,7 @@ function startTimer() {
 }
 
 function changeTime() {
-  seconds++
+  seconds++;
   if (seconds < 10) {
     document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
   } else {
@@ -214,10 +235,18 @@ function changeTime() {
     seconds = 0;
     minutes += 1;
   }
-  console.log(seconds)
+  console.log(seconds);
 }
 
 // be able to toggle a "dark mode" when light switch is off - WIP
 function toggleDarkMode() {
   document.body.classList.toggle("dark_mode");
+  if (lightButtonText.innerHTML === "on") {
+    lights = "off";
+    lightButtonText.innerHTML = "off";
+  } else {
+    lights = "on";
+    lightButtonText.innerHTML = "on";
+  }
+  // console.log(lightsOff)
 }

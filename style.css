@@ -3,13 +3,12 @@
 body {
   text-align: center;
   height: 100%;
-  background: #f3fdff;
+  background: #ffffff;
   font-family: "VT323";
 }
 
-.dark_mode body {
-  background: #262a2d;
-  visibility: hidden;
+.dark_mode {
+  background: #202428;
 }
 
 /* Game window/background styling */
@@ -24,7 +23,7 @@ body {
   border-radius: 80px;
   background-color: none;
   position: relative;
-  top: 250px;
+  top: 200px;
 }
 
 #spriteBox {
@@ -67,7 +66,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  top: 225px;
+  top: 175px;
   visibility: hidden;
 }
 
@@ -95,7 +94,7 @@ body {
   align-items: center;
   position: relative;
   width: 215px;
-  top: 240px;
+  top: 190px;
   font-weight: bold;
 }
 
