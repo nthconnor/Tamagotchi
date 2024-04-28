@@ -91,23 +91,22 @@ body {
 .dark_mode #name_level {
   color: #fffa9d;
 }
-
+/* filters generated with https://codepen.io/sosuke/pen/Pjoqqp*/
 .icon {
-  filter: opacity(0.5) drop-shadow(0 0 0 rgba(158, 216, 255, 0.818));
-  width: 25px;
-  height: 100%;
+  filter: invert(26%) sepia(96%) saturate(250%) hue-rotate(180deg) brightness(185%) contrast(92%);
+  width: 20px;
   margin-right: 5px;
-  margin-left: 25px;
+  margin-left: 20px;
   background-color: transparent;
 }
 
 .dark_mode .icon {
-  filter: opacity(0.4) drop-shadow(0 0 0 rgb(255, 250, 222));
+  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg) brightness(91%) contrast(45%);
 }
 
 #sleepIcon {
   height: 20px;
-  width: 20px;
+  width: 12%;
 }
 
 #stats {
@@ -120,7 +119,7 @@ body {
   justify-content: left;
   align-items: center;
   position: relative;
-  width: 215px;
+  width: 200px;
   top: 190px;
   font-weight: bold;
 }
