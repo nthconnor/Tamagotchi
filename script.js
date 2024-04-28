@@ -1,8 +1,10 @@
+const body = document.querySelector("body");
 const game = document.getElementById("game");
 const spriteBox = document.getElementById("spriteBox");
 const background = document.getElementById("background");
 const timer = document.getElementById("timer");
 const stats = document.getElementById("stats");
+const icons = document.querySelector(".icon");
 const name_level = document.getElementById("name_level");
 const userInputDiv = document.getElementById("userInputDiv");
 const buttonDiv = document.getElementById("buttonDiv");
@@ -27,6 +29,7 @@ let hungerInterval;
 let sleepingInterval;
 let sleepinessInterval;
 let boredomInterval;
+let timeInterval;
 
 class Tamagotchi {
   constructor(name) {
@@ -94,6 +97,7 @@ class Tamagotchi {
     hungerText.innerHTML = this.hunger;
     sleepyText.innerHTML = this.sleepiness;
     boredomText.innerHTML = this.boredom;
+    endCondition();
   }
 }
 
@@ -126,20 +130,20 @@ playButton.onclick = function () {
 function statIntervals() {
   levelInterval = setInterval(function () {
     myTamagotchi.levelUp();
-    endCondition();
+    // endCondition();
   }, 30000);
   hungerInterval = setInterval(function () {
     myTamagotchi.hungerUp();
     myTamagotchi.updateStats();
-    endCondition();
+    // endCondition();
   }, Math.floor(Math.random() * (6000 - 3000) + 3000));
   sleepinessInterval = setInterval(function () {
     myTamagotchi.sleepinessUp();
-    endCondition();
+    // endCondition();
   }, Math.floor(Math.random() * (6000 - 3000) + 3000));
   boredomInterval = setInterval(function () {
     myTamagotchi.boredomUp();
-    endCondition();
+    // endCondition();
   }, Math.floor(Math.random() * (6000 - 3000) + 3000));
 }
 
@@ -221,7 +225,7 @@ function chooseName() {
 }
 
 function startTimer() {
-  setInterval(changeTime, 1000);
+  timeInterval = setInterval(changeTime, 1000);
 }
 
 function changeTime() {
@@ -235,12 +239,22 @@ function changeTime() {
     seconds = 0;
     minutes += 1;
   }
+  if (!gameRunning) {
+    clearInterval(timeInterval)
+  }
   console.log(seconds);
 }
 
 // be able to toggle a "dark mode" when light switch is off - WIP
 function toggleDarkMode() {
-  document.body.classList.toggle("dark_mode");
+  body.classList.toggle("dark_mode");
+  game.classList.toggle("dark_mode");
+  background.classList.toggle("dark_mode");
+  stats.classList.toggle("dark_mode")
+  timer.classList.toggle("dark_mode");
+  name_level.classList.toggle("darke_mode");
+  icons.classList.toggle("dark_mode");
+
   if (lightButtonText.innerHTML === "on") {
     lights = "off";
     lightButtonText.innerHTML = "off";
