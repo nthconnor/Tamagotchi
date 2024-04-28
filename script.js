@@ -100,23 +100,31 @@ class Tamagotchi {
     endCondition();
   }
 }
-
-//
-chooseName();
-!toggleDarkMode();
+window.onload = function () {
+  chooseName();
+  toggleDarkMode('off');
+};
 
 // buttons
 startButton.onclick = startGame;
 // lowers sleepiness when dark mode is toggled
 lightButton.onclick = function () {
-  toggleDarkMode();
+  toggleDarkMode('on');
+  hideButtons();
+  console.log(lights)
   if (lights === "off") {
     // delay start of sleepingInterval by 1 second
-    setTimeout(() => sleepingInterval = setInterval(() => {
+    // setTimeout(
+    //   () =>
+    //     (sleepingInterval = setInterval(() => {
+    //       myTamagotchi.sleep();
+    //     }, 1000)),
+    //   10
+    // );
+    sleepingInterval = setInterval(() => {
       myTamagotchi.sleep();
-      // myTamagotchi.sleep();
-    }, 1000), 1000);
-  } else clearInterval(sleepingInterval)
+    }, 1000)
+  } else clearInterval(sleepingInterval);
 };
 
 feedButton.onclick = function () {
@@ -226,7 +234,7 @@ function chooseName() {
 }
 
 function startTimer() {
-  timeInterval = setInterval(changeTime, 500);
+  timeInterval = setInterval(changeTime, 1000);
 }
 
 function changeTime() {
@@ -236,27 +244,19 @@ function changeTime() {
   } else {
     seconds++;
   }
-  console.log(seconds)
+  console.log(seconds);
   if (seconds < 10) {
     document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
   } else {
     document.getElementById("timer").innerHTML = minutes + ":" + seconds;
   }
   if (!gameRunning) {
-    clearInterval(timeInterval)
+    clearInterval(timeInterval);
   }
 }
 
 // be able to toggle a "dark mode" when light switch is off - WIP
-function toggleDarkMode() {
-  body.classList.toggle("dark_mode");
-  game.classList.toggle("dark_mode");
-  background.classList.toggle("dark_mode");
-  stats.classList.toggle("dark_mode")
-  timer.classList.toggle("dark_mode");
-  name_level.classList.toggle("darke_mode");
-  icons.classList.toggle("dark_mode");
-
+function toggleDarkMode(on_off) {
   if (lightButtonText.innerHTML === "on") {
     lights = "off";
     lightButtonText.innerHTML = "off";
@@ -264,5 +264,34 @@ function toggleDarkMode() {
     lights = "on";
     lightButtonText.innerHTML = "on";
   }
-  // console.log(lightsOff)
+  if (on_off === "on") {
+    body.classList.toggle("dark_mode");
+    game.classList.toggle("dark_mode");
+    background.classList.toggle("dark_mode");
+    stats.classList.toggle("dark_mode");
+    timer.classList.toggle("dark_mode");
+    name_level.classList.toggle("dark_mode");
+    icons.classList.toggle("dark_mode");
+  }
+  if (on_off === "off") {
+    body.classList.remove("dark_mode");
+    game.classList.remove("dark_mode");
+    background.classList.remove("dark_mode");
+    stats.classList.remove("dark_mode");
+    timer.classList.remove("dark_mode");
+    name_level.classList.remove("dark_mode");
+    icons.classList.remove("dark_mode");
+
+  }
+}
+
+function hideButtons() {
+  if (lights === 'off') {
+    feedButton.style.visibility = 'hidden';
+    playButton.style.visibility = 'hidden';
+  } else {
+    feedButton.style.visibility = 'visible';
+    playButton.style.visibility = 'visible';
+
+  }
 }
