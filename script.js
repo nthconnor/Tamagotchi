@@ -111,10 +111,11 @@ startButton.onclick = startGame;
 lightButton.onclick = function () {
   toggleDarkMode();
   if (lights === "off") {
-    sleepingInterval = setInterval(() => {
+    // delay start of sleepingInterval by 1 second
+    setTimeout(() => sleepingInterval = setInterval(() => {
       myTamagotchi.sleep();
-    }, 1000);
-    myTamagotchi.sleep();
+      // myTamagotchi.sleep();
+    }, 1000), 1000);
   } else clearInterval(sleepingInterval)
 };
 
@@ -200,7 +201,7 @@ function chooseName() {
     if (i < text.length) {
       label.innerHTML += text.charAt(i);
       i++;
-      setTimeout(addLetter, 90);
+      setTimeout(addLetter, 80);
     } else {
       setTimeout(removeDots, 500);
     }
@@ -225,24 +226,25 @@ function chooseName() {
 }
 
 function startTimer() {
-  timeInterval = setInterval(changeTime, 1000);
+  timeInterval = setInterval(changeTime, 500);
 }
 
 function changeTime() {
-  seconds++;
+  if (seconds === 59) {
+    seconds = 0;
+    minutes += 1;
+  } else {
+    seconds++;
+  }
+  console.log(seconds)
   if (seconds < 10) {
     document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
   } else {
     document.getElementById("timer").innerHTML = minutes + ":" + seconds;
   }
-  if (seconds === 60) {
-    seconds = 0;
-    minutes += 1;
-  }
   if (!gameRunning) {
     clearInterval(timeInterval)
   }
-  console.log(seconds);
 }
 
 // be able to toggle a "dark mode" when light switch is off - WIP
