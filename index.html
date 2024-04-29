@@ -35,7 +35,8 @@
     <div id="game" class="dark_mode">
       <div id="background" class="dark_mode">
         <div id="spriteSheet">
-          <img src="./assets/16x16 knight 2 v3.png" id="sprite" />
+          <span id="spriteText"></span>
+          <img src="./assets/16x16 knight 2 v3.png" id="sprite" class="sleeping"/>
         </div>
       </div>
       <div id="timer" class="dark_mode">0:00</div>
@@ -46,8 +47,10 @@
       </div>
       <div id="buttonDiv">
         <button class="button" id="feedButton">feed</button>
-        <button class="button" id="lightButton">
-          <span id="onOff">on</span>
+        <button class="button day night" id="lightButton">
+          <img src="./assets/sun-svgrepo-com.svg" alt="sun icon" id="sun" />
+          <img src="./assets/moon-svgrepo-com.svg" alt="moon icon" id="moon" />
+          <span id="onOff"></span>
         </button>
         <button class="button" id="playButton">play</button>
       </div>

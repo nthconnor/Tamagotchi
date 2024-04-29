@@ -1,6 +1,7 @@
 const body = document.querySelector("body");
 const game = document.getElementById("game");
 const spriteSheet = document.getElementById("spriteSheet");
+const spriteText = document.getElementById("spriteText");
 const background = document.getElementById("background");
 const timer = document.getElementById("timer");
 const stats = document.getElementById("stats");
@@ -16,7 +17,9 @@ const hungerText = document.getElementById("hungerText");
 const sleepyText = document.getElementById("sleepyText");
 const boredomText = document.getElementById("boredomText");
 const lightButton = document.getElementById("lightButton");
-const lightButtonText = document.getElementById("onOff");
+const moonIcon = document.getElementById("moon");
+const sunIcon = document.getElementById("sun");
+// const lightButtonText = document.getElementById("onOff");
 const feedButton = document.getElementById("feedButton");
 const playButton = document.getElementById("playButton");
 let gameRunning;
@@ -198,6 +201,7 @@ function startGame() {
     hungerText.style.visibility = "hidden";
     sleepyText.style.visibility = "hidden";
     boredomText.style.visibility = "hidden";
+    spriteText.style.visibility = "hidden";
   })();
   // initialize all stat values, gameRunning to true
   (function initialize() {
@@ -210,7 +214,7 @@ function startGame() {
     hungerText.innerHTML = myTamagotchi.hunger;
     sleepyText.innerHTML = myTamagotchi.sleepiness;
     boredomText.innerHTML = myTamagotchi.boredom;
-    lightButtonText.innerHTML = "day";
+    // lightButtonText.innerHTML = "day";
   })();
   // starting time and stat intervals on game start
   startTimer();
@@ -218,6 +222,7 @@ function startGame() {
 }
 
 // function to "type out" intro text
+//refactor this to take inputs of text!
 function chooseName() {
   let i = 0;
   let text = "choose a name";
@@ -273,14 +278,23 @@ function changeTime() {
   }
 }
 
-// be able to toggle a "dark mode" when light switch is off - WIP
+// be able to toggle a "dark mode" when light switch is off
 function toggleDarkMode(on_off) {
-  if (lightButtonText.innerHTML === "day") {
+  if (lights === "on") {
     lights = "off";
-    lightButtonText.innerHTML = "night";
+    moonIcon.style.display = "none";
+    sunIcon.style.display = "inline-block";
+    setTimeout(() => {
+      spriteText.style.visibility = "visible";
+      spriteText.innerText = "zzz";
+    }, 1000);
+    // lightButtonText.innerHTML = "night";
   } else {
     lights = "on";
-    lightButtonText.innerHTML = "day";
+    sunIcon.style.display = "none";
+    moonIcon.style.display = "inline-block";
+    spriteText.style.visibility = "hidden";
+    // lightButtonText.innerHTML = "day";
   }
   if (on_off === "on") {
     body.classList.toggle("dark_mode");
@@ -329,7 +343,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#72D921";
     }
-  } else if (myTamagotchi[stat] === 3){
+  } else if (myTamagotchi[stat] === 3) {
     if (stat === "hunger") {
       hungerText.style.color = "#8BD921";
     } else if (stat === "sleepiness") {
@@ -337,7 +351,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#8BD921";
     }
-  } else if (myTamagotchi[stat] === 4){
+  } else if (myTamagotchi[stat] === 4) {
     if (stat === "hunger") {
       hungerText.style.color = "#A2D921";
     } else if (stat === "sleepiness") {
@@ -345,7 +359,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#A2D921";
     }
-  } else if (myTamagotchi[stat] === 5){
+  } else if (myTamagotchi[stat] === 5) {
     if (stat === "hunger") {
       hungerText.style.color = "#C4D921";
     } else if (stat === "sleepiness") {
@@ -353,7 +367,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#C4D921";
     }
-  } else if (myTamagotchi[stat] === 6){
+  } else if (myTamagotchi[stat] === 6) {
     if (stat === "hunger") {
       hungerText.style.color = "#D9CD21";
     } else if (stat === "sleepiness") {
@@ -361,7 +375,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#D9CD21";
     }
-  } else if (myTamagotchi[stat] === 7){
+  } else if (myTamagotchi[stat] === 7) {
     if (stat === "hunger") {
       hungerText.style.color = "#D99821";
     } else if (stat === "sleepiness") {
@@ -369,7 +383,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#D99821";
     }
-  } else if (myTamagotchi[stat] === 8){
+  } else if (myTamagotchi[stat] === 8) {
     if (stat === "hunger") {
       hungerText.style.color = "#D97321";
     } else if (stat === "sleepiness") {
@@ -377,7 +391,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#D97321";
     }
-  } else if (myTamagotchi[stat] === 9){
+  } else if (myTamagotchi[stat] === 9) {
     if (stat === "hunger") {
       hungerText.style.color = "#D95421";
     } else if (stat === "sleepiness") {
@@ -385,7 +399,7 @@ function statColors(stat) {
     } else {
       boredomText.style.color = "#D95421";
     }
-  } else if (myTamagotchi[stat] === 10){
+  } else if (myTamagotchi[stat] === 10) {
     if (stat === "hunger") {
       hungerText.style.color = "#FC1313";
     } else if (stat === "sleepiness") {
@@ -395,31 +409,3 @@ function statColors(stat) {
     }
   }
 }
-
-// function statColors(stat) {
-//   if (myTamagotchi[stat] >= 0 && myTamagotchi[stat] < 4) {
-//     if (stat === "hunger") {
-//       hungerText.style.color = "#35b435";
-//     } else if (stat === "sleepiness") {
-//       sleepyText.style.color = "#35b435";
-//     } else {
-//       boredomText.style.color = "#35b435";
-//     }
-//   } else if (myTamagotchi[stat] >= 4 && myTamagotchi[stat] < 7) {
-//     if (stat === "hunger") {
-//       hungerText.style.color = "#F4B14D";
-//     } else if (stat === "sleepiness") {
-//       sleepyText.style.color = "#F4B14D";
-//     } else {
-//       boredomText.style.color = "#F4B14D";
-//     }
-//   } else if (myTamagotchi[stat] >= 7 && myTamagotchi[stat] <= 10){
-//     if (stat === "hunger") {
-//       hungerText.style.color = "#FE0101";
-//     } else if (stat === "sleepiness") {
-//       sleepyText.style.color = "#FE0101";
-//     } else {
-//       boredomText.style.color = "#FE0101";
-//     }
-//   }
-// }
