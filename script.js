@@ -1,6 +1,6 @@
 const body = document.querySelector("body");
 const game = document.getElementById("game");
-const spriteBox = document.getElementById("spriteBox");
+const spriteSheet = document.getElementById("spriteSheet");
 const background = document.getElementById("background");
 const timer = document.getElementById("timer");
 const stats = document.getElementById("stats");
@@ -190,7 +190,7 @@ function startGame() {
   (function displayOn() {
     background.style.visibility = "visible";
     timer.style.visibility = "visible";
-    spriteBox.style.visibility = "visible";
+    spriteSheet.style.visibility = "visible";
     stats.style.visibility = "visible";
     name_level.style.visibility = "visible";
     buttonDiv.style.visibility = "visible";
@@ -313,29 +313,113 @@ function hideButtons() {
 }
 
 function statColors(stat) {
-  if (myTamagotchi[stat] >= 0 && myTamagotchi[stat] < 4) {
+  if (myTamagotchi[stat] === 1) {
     if (stat === "hunger") {
-      hungerText.style.color = "#35b435";
+      hungerText.style.color = "#42D921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#35b435";
+      sleepyText.style.color = "#42D921";
     } else {
-      boredomText.style.color = "#35b435";
+      boredomText.style.color = "#42D921";
     }
-  } else if (myTamagotchi[stat] >= 4 && myTamagotchi[stat] < 7) {
+  } else if (myTamagotchi[stat] === 2) {
     if (stat === "hunger") {
-      hungerText.style.color = "#F4B14D";
+      hungerText.style.color = "#72D921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#F4B14D";
+      sleepyText.style.color = "#72D921";
     } else {
-      boredomText.style.color = "#F4B14D";
+      boredomText.style.color = "#72D921";
     }
-  } else if (myTamagotchi[stat] >= 7 && myTamagotchi[stat] <= 10){
+  } else if (myTamagotchi[stat] === 3){
     if (stat === "hunger") {
-      hungerText.style.color = "#FE0101";
+      hungerText.style.color = "#8BD921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#FE0101";
+      sleepyText.style.color = "#8BD921";
     } else {
-      boredomText.style.color = "#FE0101";
+      boredomText.style.color = "#8BD921";
+    }
+  } else if (myTamagotchi[stat] === 4){
+    if (stat === "hunger") {
+      hungerText.style.color = "#A2D921";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#A2D921";
+    } else {
+      boredomText.style.color = "#A2D921";
+    }
+  } else if (myTamagotchi[stat] === 5){
+    if (stat === "hunger") {
+      hungerText.style.color = "#C4D921";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#C4D921";
+    } else {
+      boredomText.style.color = "#C4D921";
+    }
+  } else if (myTamagotchi[stat] === 6){
+    if (stat === "hunger") {
+      hungerText.style.color = "#D9CD21";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#D9CD21";
+    } else {
+      boredomText.style.color = "#D9CD21";
+    }
+  } else if (myTamagotchi[stat] === 7){
+    if (stat === "hunger") {
+      hungerText.style.color = "#D99821";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#D99821";
+    } else {
+      boredomText.style.color = "#D99821";
+    }
+  } else if (myTamagotchi[stat] === 8){
+    if (stat === "hunger") {
+      hungerText.style.color = "#D97321";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#D97321";
+    } else {
+      boredomText.style.color = "#D97321";
+    }
+  } else if (myTamagotchi[stat] === 9){
+    if (stat === "hunger") {
+      hungerText.style.color = "#D95421";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#D95421";
+    } else {
+      boredomText.style.color = "#D95421";
+    }
+  } else if (myTamagotchi[stat] === 10){
+    if (stat === "hunger") {
+      hungerText.style.color = "#FC1313";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#FC1313";
+    } else {
+      boredomText.style.color = "#FC1313";
     }
   }
 }
+
+// function statColors(stat) {
+//   if (myTamagotchi[stat] >= 0 && myTamagotchi[stat] < 4) {
+//     if (stat === "hunger") {
+//       hungerText.style.color = "#35b435";
+//     } else if (stat === "sleepiness") {
+//       sleepyText.style.color = "#35b435";
+//     } else {
+//       boredomText.style.color = "#35b435";
+//     }
+//   } else if (myTamagotchi[stat] >= 4 && myTamagotchi[stat] < 7) {
+//     if (stat === "hunger") {
+//       hungerText.style.color = "#F4B14D";
+//     } else if (stat === "sleepiness") {
+//       sleepyText.style.color = "#F4B14D";
+//     } else {
+//       boredomText.style.color = "#F4B14D";
+//     }
+//   } else if (myTamagotchi[stat] >= 7 && myTamagotchi[stat] <= 10){
+//     if (stat === "hunger") {
+//       hungerText.style.color = "#FE0101";
+//     } else if (stat === "sleepiness") {
+//       sleepyText.style.color = "#FE0101";
+//     } else {
+//       boredomText.style.color = "#FE0101";
+//     }
+//   }
+// }
