@@ -7,7 +7,7 @@ body {
   font-family: "VT323";
 }
 
-.dark_mode{
+.dark_mode {
   background: #1c232a;
 }
 
@@ -17,7 +17,7 @@ body {
   justify-content: center;
   align-items: center;
   /* border: 2px solid #228bdb; */
-  border: 4px solid #54b5ff;
+  border: 4px solid #99dd8f;
   width: 325px;
   height: 300px;
   border-radius: 80px;
@@ -33,7 +33,7 @@ body {
 }
 
 #background {
-  background: url("./assets/tamagotchiBack.gif") center center no-repeat;
+  background: url("./assets/tamagotchiback2.gif") center center no-repeat;
   background-size: cover;
   border-radius: 75px;
   width: 100%;
@@ -42,42 +42,69 @@ body {
   visibility: hidden;
   top: 0;
   left: 0;
-  filter: contrast(80%) brightness(125%);
+  filter: contrast(90%) brightness(100%);
 }
 
 .dark_mode #background {
   filter: brightness(35%) hue-rotate(75deg) saturate(50%) contrast(90%);
 }
 
-#spriteBox {
-  display: block;
-  visibility: hidden;
-  height: auto;
-  width: auto;
+@keyframes idle {
+  from {
+    transform: translate(0px,0);
+  }
+  to {
+    transform: translate(-555px,0);
+  }
+}
+
+#spriteSheet {
+  width: 111px;
+  height: 111px;
+  filter: brightness(125%) contrast(125%);
+  /* background-color: wheat; */
   position: absolute;
-  top: 250px;
-  right: 210px;
+  overflow: hidden;
+  left: 35%;
+  top: 40%;
+}
+
+#sprite {
+  width: 888px;
+  height: 888px;
+  animation: idle 0.8s steps(5) infinite;
 }
 
 /* Stat/Info display styling */
 #timer {
   font-size: 25px;
-  color: #125f9b;
+  color: #a39f72;
   position: relative;
   top: 10px;
   display: block;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
   visibility: hidden;
-  background: transparent;
+  width: 60px;
+  background: #fffee6;
+  border: 2px solid #e4e49c;
+  border-radius: 25px;
+}
+
+#timer:hover {
+  cursor: default;
 }
 
 .dark_mode #timer {
-  color: #fffa9d;
+  color: #fffbaf;
+  background: #3d3d36;
 }
 
 /* Icon Styling for the stats*/
 #name_level {
   font-size: 22px;
-  color: #54b5ff;
+  color: #a39f72;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -88,19 +115,25 @@ body {
   background: transparent;
 }
 
+#name_level:hover {
+  cursor: default;
+}
+
 .dark_mode #name_level {
   color: #fffa9d;
 }
 /* filters generated with https://codepen.io/sosuke/pen/Pjoqqp */
 .icon {
-  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg) brightness(91%) contrast(45%);
+  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
+    brightness(91%) contrast(45%);
   width: 20px;
   margin: 2px 2px;
   background-color: transparent;
 }
 
 .dark_mode .icon {
-  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg) brightness(91%) contrast(45%);
+  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
+    brightness(91%) contrast(45%);
 }
 
 #sleepIcon {
@@ -139,6 +172,10 @@ body {
   border: 2px solid #e4e49c;
 }
 
+#stats:hover {
+  cursor: default;
+}
+
 .dark_mode #stats {
   /* color: #fffa9d; */
   background: none;
@@ -158,16 +195,16 @@ body {
 }
 
 #userInputDiv label {
-  color: #228bdb;
+  color: #a39f72;
   font-weight: bold;
 }
 
 #username {
   margin: 10px auto;
-  border: 2px solid #64bcff;
+  border: 2px solid #a39f72;
   border-radius: 5px;
-  background: #f3fdff;
-  color: #228bdb;
+  background: #fffee5;
+  color: #a39f72;
 }
 
 /* BUTTON STYLING  */

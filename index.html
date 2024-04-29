@@ -8,47 +8,49 @@
     <script src="script.js" defer></script>
   </head>
   <body id="body" class="dark_mode">
-      <div id="name_level" class="dark_mode">
-        <span id="nameText">name</span>
-        <span id="level">level <span id="levelText"></span></span>
-      </div>
-      <div id="stats" class="dark_mode">
-        <img
-          src="./assets/food-restaurant-svgrepo-com.svg"
-          alt="plate with fork and knife icons"
-          id="hungerIcon"
-          class="icon dark_mode"
-        /><span id="hungerText">0</span>
-        <img
-          src="./assets/sleep-one-svgrepo-com.svg"
-          alt="zzz icon"
-          id="sleepIcon"
-          class="icon dark_mode"
-        /><span id="sleepyText">0</span>
-        <img
-          src="./assets/face-smile-svgrepo-com.svg"
-          alt="bored face icon"
-          id="boredomIcon"
-          class="icon dark_mode"
-        /><span id="boredomText">0</span>
-      </div>
-      <div id="game" class="dark_mode">
-        <div id="background" class="dark_mode"></div>
-        <div id="timer" class="dark_mode">0:00</div>
-        <div id="userInputDiv">
-          <label for="username"></label>
-          <input type="text" id="username" required />
-          <button type="submit" id="startButton" class="button">start</button>
-        </div>
-        <div id="spriteBox">
-          <img src="assets/Pink_Monster.png" id="sprite" />
-        </div>
-        <div id="buttonDiv">
-          <button class="button" id="feedButton">feed</button>
-          <button class="button" id="lightButton"><span id="onOff">on</span>
-          </button>
-          <button class="button" id="playButton">play</button>
+    <div id="name_level" class="dark_mode">
+      <span id="nameText">name</span>
+      <span id="level">level <span id="levelText"></span></span>
+    </div>
+    <div id="stats" class="dark_mode">
+      <img
+        src="./assets/food-restaurant-svgrepo-com.svg"
+        alt="plate with fork and knife icons"
+        id="hungerIcon"
+        class="icon dark_mode"
+      /><span id="hungerText">0</span>
+      <img
+        src="./assets/sleep-one-svgrepo-com.svg"
+        alt="zzz icon"
+        id="sleepIcon"
+        class="icon dark_mode"
+      /><span id="sleepyText">0</span>
+      <img
+        src="./assets/face-smile-svgrepo-com.svg"
+        alt="bored face icon"
+        id="boredomIcon"
+        class="icon dark_mode"
+      /><span id="boredomText">0</span>
+    </div>
+    <div id="game" class="dark_mode">
+      <div id="background" class="dark_mode">
+        <div id="spriteSheet">
+          <img src="./assets/16x16 knight 2 v3.png" id="sprite" />
         </div>
       </div>
+      <div id="timer" class="dark_mode">0:00</div>
+      <div id="userInputDiv">
+        <label for="username"></label>
+        <input type="text" id="username" required />
+        <button type="submit" id="startButton" class="button">start</button>
+      </div>
+      <div id="buttonDiv">
+        <button class="button" id="feedButton">feed</button>
+        <button class="button" id="lightButton">
+          <span id="onOff">on</span>
+        </button>
+        <button class="button" id="playButton">play</button>
+      </div>
+    </div>
   </body>
 </html>
