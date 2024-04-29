@@ -49,6 +49,10 @@ class Tamagotchi {
   hungerUp() {
     this.hunger += 1;
     this.updateStats();
+    // statColors("hunger");
+    if (this.hunger > 0) {
+      hungerText.style.visibility = "visible";
+    }
     if (!gameRunning) {
       return;
     }
@@ -57,6 +61,10 @@ class Tamagotchi {
     if (lights === "on") {
       this.sleepiness += 1;
       this.updateStats();
+      // statColors("sleepiness");
+    }
+    if (this.sleepiness > 0) {
+      sleepyText.style.visibility = "visible";
     }
     if (!gameRunning) {
       return;
@@ -65,6 +73,10 @@ class Tamagotchi {
   boredomUp() {
     this.boredom += 1;
     this.updateStats();
+    // statColors("boredom");
+    if (this.boredom > 0) {
+      boredomText.style.visibility = "visible";
+    }
     if (!gameRunning) {
       return;
     }
@@ -97,21 +109,24 @@ class Tamagotchi {
     hungerText.innerHTML = this.hunger;
     sleepyText.innerHTML = this.sleepiness;
     boredomText.innerHTML = this.boredom;
+    statColors("hunger");
+    statColors("sleepiness");
+    statColors("boredom");
     endCondition();
   }
 }
 window.onload = function () {
   chooseName();
-  toggleDarkMode('off');
+  toggleDarkMode("off");
 };
 
 // buttons
 startButton.onclick = startGame;
 // lowers sleepiness when dark mode is toggled
 lightButton.onclick = function () {
-  toggleDarkMode('on');
+  toggleDarkMode("on");
   hideButtons();
-  console.log(lights)
+  console.log(lights);
   if (lights === "off") {
     // delay start of sleepingInterval by 1 second
     // setTimeout(
@@ -123,7 +138,7 @@ lightButton.onclick = function () {
     // );
     sleepingInterval = setInterval(() => {
       myTamagotchi.sleep();
-    }, 1000)
+    }, 1000);
   } else clearInterval(sleepingInterval);
 };
 
@@ -180,6 +195,9 @@ function startGame() {
     name_level.style.visibility = "visible";
     buttonDiv.style.visibility = "visible";
     userInputDiv.style.visibility = "hidden";
+    hungerText.style.visibility = "hidden";
+    sleepyText.style.visibility = "hidden";
+    boredomText.style.visibility = "hidden";
   })();
   // initialize all stat values, gameRunning to true
   (function initialize() {
@@ -192,7 +210,7 @@ function startGame() {
     hungerText.innerHTML = myTamagotchi.hunger;
     sleepyText.innerHTML = myTamagotchi.sleepiness;
     boredomText.innerHTML = myTamagotchi.boredom;
-    lightButtonText.innerHTML = "on";
+    lightButtonText.innerHTML = "day";
   })();
   // starting time and stat intervals on game start
   startTimer();
@@ -257,12 +275,12 @@ function changeTime() {
 
 // be able to toggle a "dark mode" when light switch is off - WIP
 function toggleDarkMode(on_off) {
-  if (lightButtonText.innerHTML === "on") {
+  if (lightButtonText.innerHTML === "day") {
     lights = "off";
-    lightButtonText.innerHTML = "off";
+    lightButtonText.innerHTML = "night";
   } else {
     lights = "on";
-    lightButtonText.innerHTML = "on";
+    lightButtonText.innerHTML = "day";
   }
   if (on_off === "on") {
     body.classList.toggle("dark_mode");
@@ -281,17 +299,43 @@ function toggleDarkMode(on_off) {
     timer.classList.remove("dark_mode");
     name_level.classList.remove("dark_mode");
     icons.classList.remove("dark_mode");
-
   }
 }
 
 function hideButtons() {
-  if (lights === 'off') {
-    feedButton.style.visibility = 'hidden';
-    playButton.style.visibility = 'hidden';
+  if (lights === "off") {
+    feedButton.style.visibility = "hidden";
+    playButton.style.visibility = "hidden";
   } else {
-    feedButton.style.visibility = 'visible';
-    playButton.style.visibility = 'visible';
+    feedButton.style.visibility = "visible";
+    playButton.style.visibility = "visible";
+  }
+}
 
+function statColors(stat) {
+  if (myTamagotchi[stat] >= 0 && myTamagotchi[stat] < 4) {
+    if (stat === "hunger") {
+      hungerText.style.color = "#35b435";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#35b435";
+    } else {
+      boredomText.style.color = "#35b435";
+    }
+  } else if (myTamagotchi[stat] >= 4 && myTamagotchi[stat] < 7) {
+    if (stat === "hunger") {
+      hungerText.style.color = "#F4B14D";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#F4B14D";
+    } else {
+      boredomText.style.color = "#F4B14D";
+    }
+  } else if (myTamagotchi[stat] >= 7 && myTamagotchi[stat] <= 10){
+    if (stat === "hunger") {
+      hungerText.style.color = "#FE0101";
+    } else if (stat === "sleepiness") {
+      sleepyText.style.color = "#FE0101";
+    } else {
+      boredomText.style.color = "#FE0101";
+    }
   }
 }
