@@ -2,6 +2,11 @@ const body = document.querySelector("body");
 const game = document.getElementById("game");
 const spriteSheet = document.getElementById("spriteSheet");
 const spriteText = document.getElementById("spriteText");
+const spriteClass = document.querySelector(".spriteClass");
+const sprite_1 = document.getElementById("sprite_1");
+const sprite_2 = document.getElementById("sprite_2");
+const sprite_3 = document.getElementById("sprite_3");
+const sprite_4 = document.getElementById("sprite_4");
 const background = document.getElementById("background");
 const timer = document.getElementById("timer");
 const stats = document.getElementById("stats");
@@ -44,6 +49,7 @@ class Tamagotchi {
   }
   levelUp() {
     this.level += 1;
+    this.updateSprite();
     this.updateStats();
     if (!gameRunning) {
       return;
@@ -104,6 +110,18 @@ class Tamagotchi {
       this.updateStats();
     }
   }
+  dead() {
+    if (!gameRunning) {
+      sprite_1.classList.remove("idle");
+      sprite_2.classList.remove("idle");
+      sprite_3.classList.remove("idle");
+      sprite_4.classList.remove("idle");
+      sprite_1.classList.add("dead");
+      sprite_2.classList.add("dead");
+      sprite_3.classList.add("dead");
+      sprite_4.classList.add("dead");
+    }
+  }
   updateStats() {
     if (!gameRunning) {
       return;
@@ -116,20 +134,37 @@ class Tamagotchi {
     statColors("sleepiness");
     statColors("boredom");
     endCondition();
+    myTamagotchi.dead();
+  }
+  updateSprite() {
+    if (gameRunning) {
+      if (this.level === 1) {
+        sprite_1.style.visibility = "visible";
+      } else if (this.level === 2) {
+        sprite_1.style.visibility = "hidden";
+        sprite_2.style.visibility = "visible";
+      } else if (this.level === 3) {
+        sprite_2.style.visibility = "hidden";
+        sprite_3.style.visibility = "visible";
+      } else {
+        sprite_3.style.visibility = "hidden";
+        sprite_4.style.visibility = "visible";
+      }
+    } else {
+      return;
+    }
   }
 }
-window.onload = function () {
-  chooseName();
-  toggleDarkMode("off");
-};
 
+chooseName();
+toggleDarkMode("off");
 // buttons
 startButton.onclick = startGame;
+
 // lowers sleepiness when dark mode is toggled
 lightButton.onclick = function () {
   toggleDarkMode("on");
   hideButtons();
-  console.log(lights);
   if (lights === "off") {
     // delay start of sleepingInterval by 1 second
     // setTimeout(
@@ -163,15 +198,15 @@ function statIntervals() {
     myTamagotchi.hungerUp();
     myTamagotchi.updateStats();
     // endCondition();
-  }, Math.floor(Math.random() * (6000 - 3000) + 3000));
+  }, Math.floor(Math.random() * (4000 - 6000) + 4000));
   sleepinessInterval = setInterval(function () {
     myTamagotchi.sleepinessUp();
     // endCondition();
-  }, Math.floor(Math.random() * (6000 - 3000) + 3000));
+  }, Math.floor(Math.random() * (4000 - 6000) + 4000));
   boredomInterval = setInterval(function () {
     myTamagotchi.boredomUp();
     // endCondition();
-  }, Math.floor(Math.random() * (6000 - 3000) + 3000));
+  }, Math.floor(Math.random() * (4000 - 6000) + 4000));
 }
 
 // use this somewhere it's repeatedly checked for the loss condition
@@ -189,11 +224,17 @@ function endCondition() {
 function startGame() {
   const name = nameInput.value;
   myTamagotchi = new Tamagotchi(name);
+  spriteClass.classList.remove("dead");
+  spriteClass.classList.add("idle");
   // turn on display of game info
   (function displayOn() {
     background.style.visibility = "visible";
     timer.style.visibility = "visible";
     spriteSheet.style.visibility = "visible";
+    sprite_1.style.visibility = "visible";
+    sprite_2.style.visibility = "hidden";
+    sprite_3.style.visibility = "hidden";
+    sprite_4.style.visibility = "hidden";
     stats.style.visibility = "visible";
     name_level.style.visibility = "visible";
     buttonDiv.style.visibility = "visible";
@@ -214,6 +255,7 @@ function startGame() {
     hungerText.innerHTML = myTamagotchi.hunger;
     sleepyText.innerHTML = myTamagotchi.sleepiness;
     boredomText.innerHTML = myTamagotchi.boredom;
+    initializeAnimations();
     // lightButtonText.innerHTML = "day";
   })();
   // starting time and stat intervals on game start
@@ -266,6 +308,7 @@ function changeTime() {
     minutes += 1;
   } else {
     seconds++;
+    console.log(gameRunning);
   }
   console.log(seconds);
   if (seconds < 10) {
@@ -284,10 +327,12 @@ function toggleDarkMode(on_off) {
     lights = "off";
     moonIcon.style.display = "none";
     sunIcon.style.display = "inline-block";
-    setTimeout(() => {
-      spriteText.style.visibility = "visible";
-      spriteText.innerText = "zzz";
-    }, 1000);
+    if (gameRunning) {
+      setTimeout(() => {
+        spriteText.style.visibility = "visible";
+        spriteText.innerText = "zzz";
+      }, 100);
+    }
     // lightButtonText.innerHTML = "night";
   } else {
     lights = "on";
@@ -408,4 +453,15 @@ function statColors(stat) {
       boredomText.style.color = "#FC1313";
     }
   }
+}
+
+function initializeAnimations() {
+  sprite_1.classList.add("spriteClass")
+  sprite_2.classList.add("spriteClass")
+  sprite_3.classList.add("spriteClass")
+  sprite_4.classList.add("spriteClass")
+  sprite_1.classList.remove("dead");
+  sprite_2.classList.remove("dead");
+  sprite_3.classList.remove("dead");
+  sprite_4.classList.remove("dead");
 }
