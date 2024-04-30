@@ -1,15 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
-
+/* BODY */
 body {
   text-align: center;
   height: 100%;
   background: #f5ffed;
   font-family: "VT323";
 }
-
 .dark_mode {
   background: #1c232a;
 }
+/* END BODY */
+
+/* TITLE SCREEN */
 .welcomeScreen {
   display: inline-block;
   visibility: visible;
@@ -31,7 +33,7 @@ body {
   position: relative;
   top: 175px;
 }
-
+/* TITLE ANIMATION */
 @keyframes title {
   0% {
     font-size: 290%;
@@ -40,8 +42,35 @@ body {
     font-size: 300%;
   }
 }
+/* END TITLE ANIMATION */
+/* END TITLE SCREEN */
 
-/* Game window/background styling */
+/* INPUT FORM */
+#userInputDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 80px;
+  margin: 0 auto;
+  font-size: 20px;
+  visibility: visible;
+}
+#userInputDiv label {
+  color: #a39f72;
+  font-weight: bold;
+}
+#username {
+  margin: 10px auto;
+  border: 2px solid #a39f72;
+  border-radius: 5px;
+  background: #fffee5;
+  color: #a39f72;
+}
+/* END INPUT FORM */
+
+/* GAME WINDOW */
 #game {
   display: inline-block;
   justify-content: center;
@@ -56,14 +85,14 @@ body {
   top: 150px;
   background-color: transparent;
 }
-
 .dark_mode #game {
   border-color: #323c43;
   background-color: #434a64;
 }
 
 #background {
-  background: url("./assets/background/tamagotchiback2.gif") center center no-repeat;
+  background: url("./assets/background/tamagotchiback2.gif") center center
+    no-repeat;
   background-size: cover;
   border-radius: 75px;
   width: 100%;
@@ -74,30 +103,12 @@ body {
   left: 0;
   filter: contrast(100%) brightness(100%);
 }
-
 .dark_mode #background {
   filter: brightness(35%) hue-rotate(75deg) saturate(40%) contrast(90%);
 }
+/* END GAME WINDOW */
 
-/* sprite animations */
-@keyframes idle {
-  from {
-    transform: translate(0px, 0);
-  }
-  to {
-    transform: translate(-555px, 0);
-  }
-}
-
-@keyframes dead {
-  from {
-    transform: translate(0px, -666px);
-  }
-  to {
-    transform: translate(-777px, -666px);
-  }
-}
-/* ////////////////// */
+/* SPRITESHEETS */
 #spriteSheet {
   width: 111px;
   height: 111px;
@@ -109,17 +120,14 @@ body {
   top: 35%;
   z-index: 1;
 }
-
 .spriteClass.idle {
   animation: idle 0.7s steps(5) infinite alternate;
 }
-
 .spriteClass.dead {
   transform: translate(-666px, -666px);
   animation: dead 0.8s steps(7);
   animation-iteration-count: 1;
 }
-
 #sprite_1,
 #sprite_2,
 #sprite_3,
@@ -131,7 +139,6 @@ body {
   left: 0;
   /* animation: idle 0.6s steps(5) infinite; */
 }
-
 #spriteText {
   filter: none;
   color: rgb(0, 0, 0);
@@ -148,8 +155,27 @@ body {
   left: 45px;
   visibility: visible;
 }
+/* SPRITE ANIMATIONS */
+@keyframes idle {
+  from {
+    transform: translate(0px, 0);
+  }
+  to {
+    transform: translate(-555px, 0);
+  }
+}
+@keyframes dead {
+  from {
+    transform: translate(0px, -666px);
+  }
+  to {
+    transform: translate(-777px, -666px);
+  }
+}
+/* END SPRITE ANIMATIONS */
+/* END SPRITESHEETS */
 
-/* Stat/Info display styling */
+/* STATS */
 #timer {
   font-size: 25px;
   color: #a39f72;
@@ -165,17 +191,13 @@ body {
   border: 2px solid #e4e49c;
   border-radius: 25px;
 }
-
 #timer:hover {
   cursor: default;
 }
-
 .dark_mode #timer {
   color: #fffbaf;
   background: #3d3d36;
 }
-
-/* Icon Styling for the stats*/
 #name_level {
   font-size: 22px;
   color: #a39f72;
@@ -188,45 +210,12 @@ body {
   visibility: hidden;
   background: transparent;
 }
-
 #name_level:hover {
   cursor: default;
 }
-
 .dark_mode #name_level {
   color: #fffa9d;
 }
-/* filters generated with https://codepen.io/sosuke/pen/Pjoqqp */
-.icon {
-  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
-    brightness(91%) contrast(45%);
-  width: 20px;
-  margin: 2px 2px;
-  background-color: transparent;
-}
-
-.dark_mode .icon {
-  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
-    brightness(91%) contrast(45%);
-}
-
-#sleepIcon {
-  height: 20px;
-  width: 12%;
-  margin-left: 24px;
-  margin-right: 3px;
-}
-
-#boredomIcon {
-  margin-left: 25px;
-  margin-right: 5px;
-}
-
-#hungerIcon {
-  margin-left: 0px;
-  margin-right: 5px;
-}
-
 #stats {
   font-family: "Times New Roman", Times, serif;
   margin: 0 auto;
@@ -245,50 +234,51 @@ body {
   border-radius: 25px;
   border: 2px solid #e4e49c;
 }
-
 #stats:hover {
   cursor: default;
 }
-
 .dark_mode #stats {
   /* color: #fffa9d; */
   background: none;
 }
+/* END STATS */
 
-/* Input field/label/submit button styling*/
-#userInputDiv {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  top: 80px;
-  margin: 0 auto;
-  font-size: 20px;
-  visibility: visible;
+/* ICONS */
+/* filters generated with https://codepen.io/sosuke/pen/Pjoqqp */
+.icon {
+  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
+    brightness(91%) contrast(45%);
+  width: 20px;
+  margin: 2px 2px;
+  background-color: transparent;
 }
-
-#userInputDiv label {
-  color: #a39f72;
-  font-weight: bold;
+.dark_mode .icon {
+  filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
+    brightness(91%) contrast(45%);
 }
-
-#username {
-  margin: 10px auto;
-  border: 2px solid #a39f72;
-  border-radius: 5px;
-  background: #fffee5;
-  color: #a39f72;
+#sleepIcon {
+  height: 20px;
+  width: 12%;
+  margin-left: 24px;
+  margin-right: 3px;
 }
+#boredomIcon {
+  margin-left: 25px;
+  margin-right: 5px;
+}
+#hungerIcon {
+  margin-left: 0px;
+  margin-right: 5px;
+}
+/* END ICONS */
 
-/* BUTTON STYLING  */
+/* BUTTONS*/
 #buttonDiv {
   position: relative;
   top: 165px;
   display: inline-block;
   visibility: hidden;
 }
-
 .button {
   font-family: "VT323";
   font-size: 18px;
@@ -301,7 +291,6 @@ body {
   padding: 4px;
   position: relative;
 }
-
 #sun,
 #moon {
   filter: invert(96%) sepia(10%) saturate(1418%) hue-rotate(358deg)
@@ -312,20 +301,17 @@ body {
   margin-top: -1px;
   background-size: fit;
 }
-
 #sun {
   display: none;
 }
-
 #moon {
   display: inline-block;
 }
-
 .button:hover {
   background-color: #fff8d4;
 }
-
 .button:active {
   background-color: #b6b2a6;
   border: 2px solid #8e8d65;
 }
+/* END BUTTONS */

@@ -40,7 +40,7 @@ const elements = {
   audioElements: {
     main_theme: new Audio("./assets/audio/main_theme.mp3"),
     day_ambience: new Audio("./assets/audio/day_ambience.mp3"),
-    levelUp_sound: new Audio("./assets/audio/level_sound.mp3"),
+    levelUp_sound: new Audio("./assets/audio/level_up.mp3"),
     button_sound: new Audio("./assets/audio/button_sound.mp3"),
     game_over: new Audio("./assets/audio/game_over.mp3"),
   },
@@ -48,7 +48,7 @@ const elements = {
 let gameRunning;
 let seconds;
 let minutes;
-// let myTamagotchi;
+let myTamagotchi;
 let lights;
 let levelInterval;
 let hungerInterval;
@@ -186,8 +186,18 @@ class Tamagotchi {
 audioHandler();
 startScreen();
 toggleDarkMode("off");
-// -----------------
-// buttons ---------
+// ----------------
+
+// button handlers
+playGameButton.onclick = function () {
+  (function playGame() {
+    elements.userInputDiv.style.display = "flex";
+    elements.welcomeScreen.style.display = "none";
+    elements.buttonElements.playGameButton.style.display = "none";
+    chooseName();
+  })();
+  elements.audioElements.button_sound.play();
+};
 startButton.onclick = function () {
   startGame();
   elements.audioElements.button_sound.play();
@@ -220,11 +230,64 @@ playButton.onclick = function () {
   myTamagotchi.play();
   elements.audioElements.button_sound.play();
 };
-playGameButton.onclick = function () {
-  playGame();
-  elements.audioElements.button_sound.play();
-};
 // ------------------
+
+
+function startScreen() {
+  elements.userInputDiv.style.display = "none";
+  elements.welcomeScreen.style.visibility = "visible";
+  elements.buttonElements.playGameButton.style.visibility = "visible";
+}
+
+// function to run on 'start' button click
+function startGame() {
+  const name = elements.statElements.nameInput.value;
+  myTamagotchi = new Tamagotchi(name);
+  elements.spriteElements.spriteClass.classList.remove("dead");
+  elements.spriteElements.spriteClass.classList.add("idle");
+  // display UI
+  (function displayOn() {
+    elements.background.style.visibility = "visible";
+    elements.statElements.timer.style.visibility = "visible";
+    elements.spriteElements.spriteSheet.style.visibility = "visible";
+    elements.spriteElements.sprites.sprite_1.style.visibility = "visible";
+    elements.spriteElements.sprites.sprite_2.style.visibility = "hidden";
+    elements.spriteElements.sprites.sprite_3.style.visibility = "hidden";
+    elements.spriteElements.sprites.sprite_4.style.visibility = "hidden";
+    elements.statElements.stats.style.visibility = "visible";
+    elements.statElements.name_level.style.visibility = "visible";
+    elements.buttonElements.buttonDiv.style.visibility = "visible";
+    elements.userInputDiv.style.visibility = "hidden";
+    elements.spriteElements.spriteText.style.visibility = "hidden";
+  })();
+  // initialize stats | gameRunning -> true
+  (function initializeStats() {
+    seconds = 0;
+    minutes = 0;
+    gameRunning = true;
+    lights = "on";
+    elements.statElements.nameText.innerHTML = myTamagotchi.name;
+    elements.statElements.levelText.innerHTML = myTamagotchi.level;
+    elements.statElements.hungerText.innerHTML = myTamagotchi.hunger;
+    elements.statElements.sleepyText.innerHTML = myTamagotchi.sleepiness;
+    elements.statElements.boredomText.innerHTML = myTamagotchi.boredom;
+    // initializeAnimations();
+  })();
+  // initialize animations to idle
+  (function initializeAnimations() {
+    elements.spriteElements.sprites.sprite_1.classList.add("spriteClass");
+    elements.spriteElements.sprites.sprite_2.classList.add("spriteClass");
+    elements.spriteElements.sprites.sprite_3.classList.add("spriteClass");
+    elements.spriteElements.sprites.sprite_4.classList.add("spriteClass");
+    elements.spriteElements.sprites.sprite_1.classList.remove("dead");
+    elements.spriteElements.sprites.sprite_2.classList.remove("dead");
+    elements.spriteElements.sprites.sprite_3.classList.remove("dead");
+    elements.spriteElements.sprites.sprite_4.classList.remove("dead");
+  })();
+  startTimer();
+  // start intervals
+  statIntervals();
+}
 
 // Create a function that will update stat values at randomized intervals
 function statIntervals() {
@@ -258,46 +321,8 @@ function endCondition() {
   }
 }
 
-// function to run on 'start' button click
-function startGame() {
-  const name = elements.statElements.nameInput.value;
-  myTamagotchi = new Tamagotchi(name);
-  elements.spriteElements.spriteClass.classList.remove("dead");
-  elements.spriteElements.spriteClass.classList.add("idle");
-  // turn on display of game info
-  (function displayOn() {
-    elements.background.style.visibility = "visible";
-    elements.statElements.timer.style.visibility = "visible";
-    elements.spriteElements.spriteSheet.style.visibility = "visible";
-    elements.spriteElements.sprites.sprite_1.style.visibility = "visible";
-    elements.spriteElements.sprites.sprite_2.style.visibility = "hidden";
-    elements.spriteElements.sprites.sprite_3.style.visibility = "hidden";
-    elements.spriteElements.sprites.sprite_4.style.visibility = "hidden";
-    elements.statElements.stats.style.visibility = "visible";
-    elements.statElements.name_level.style.visibility = "visible";
-    elements.buttonElements.buttonDiv.style.visibility = "visible";
-    elements.userInputDiv.style.visibility = "hidden";
-    elements.spriteElements.spriteText.style.visibility = "hidden";
-  })();
-  // initialize all stat values, gameRunning to true
-  (function initialize() {
-    seconds = 0;
-    minutes = 0;
-    gameRunning = true;
-    lights = "on";
-    elements.statElements.nameText.innerHTML = myTamagotchi.name;
-    elements.statElements.levelText.innerHTML = myTamagotchi.level;
-    elements.statElements.hungerText.innerHTML = myTamagotchi.hunger;
-    elements.statElements.sleepyText.innerHTML = myTamagotchi.sleepiness;
-    elements.statElements.boredomText.innerHTML = myTamagotchi.boredom;
-    initializeAnimations();
-  })();
-  // starting time and stat intervals on game start
-  startTimer();
-  statIntervals();
-}
 
-// function to "type out" intro text
+// add a typing effect to user input label
 //recreate to take parameters
 function chooseName() {
   let i = 0;
@@ -332,10 +357,10 @@ function chooseName() {
   addLetter();
 }
 
+// time controllers
 function startTimer() {
   timeInterval = setInterval(changeTime, 1000);
 }
-
 function changeTime() {
   if (seconds === 59) {
     seconds = 0;
@@ -353,8 +378,8 @@ function changeTime() {
     clearInterval(timeInterval);
   }
 }
+// end time controllers
 
-// be able to toggle a "dark mode" when light switch is off
 function toggleDarkMode(on_off) {
   if (lights === "on") {
     lights = "off";
@@ -364,7 +389,7 @@ function toggleDarkMode(on_off) {
       setTimeout(() => {
         elements.spriteElements.spriteText.style.visibility = "visible";
         elements.spriteElements.spriteText.innerText = "zzz";
-      }, 100);
+      }, 50);
     }
     // lightButtonText.innerHTML = "night";
   } else {
@@ -393,7 +418,8 @@ function toggleDarkMode(on_off) {
     elements.buttonElements.icons.classList.remove("dark_mode");
   }
 }
-
+// used for lightButton
+  // hide some UI when dark mode on
 function hideButtons() {
   if (lights === "off") {
     elements.buttonElements.feedButton.style.visibility = "hidden";
@@ -404,6 +430,9 @@ function hideButtons() {
   }
 }
 
+
+// recolors stats for each value
+  // needs attention
 function statColors(stat) {
   if (myTamagotchi[stat] === 1) {
     if (stat === "hunger") {
@@ -488,36 +517,40 @@ function statColors(stat) {
   }
 }
 
-function initializeAnimations() {
-  elements.spriteElements.sprites.sprite_1.classList.add("spriteClass");
-  elements.spriteElements.sprites.sprite_2.classList.add("spriteClass");
-  elements.spriteElements.sprites.sprite_3.classList.add("spriteClass");
-  elements.spriteElements.sprites.sprite_4.classList.add("spriteClass");
-  elements.spriteElements.sprites.sprite_1.classList.remove("dead");
-  elements.spriteElements.sprites.sprite_2.classList.remove("dead");
-  elements.spriteElements.sprites.sprite_3.classList.remove("dead");
-  elements.spriteElements.sprites.sprite_4.classList.remove("dead");
-}
+// function initializeAnimations() {
+//   elements.spriteElements.sprites.sprite_1.classList.add("spriteClass");
+//   elements.spriteElements.sprites.sprite_2.classList.add("spriteClass");
+//   elements.spriteElements.sprites.sprite_3.classList.add("spriteClass");
+//   elements.spriteElements.sprites.sprite_4.classList.add("spriteClass");
+//   elements.spriteElements.sprites.sprite_1.classList.remove("dead");
+//   elements.spriteElements.sprites.sprite_2.classList.remove("dead");
+//   elements.spriteElements.sprites.sprite_3.classList.remove("dead");
+//   elements.spriteElements.sprites.sprite_4.classList.remove("dead");
+// }
 
-function playGame() {
-  elements.userInputDiv.style.display = "flex";
-  elements.welcomeScreen.style.display = "none";
-  elements.buttonElements.playGameButton.style.display = "none";
-  chooseName();
-}
-
-function startScreen() {
-  elements.userInputDiv.style.display = "none";
-  elements.welcomeScreen.style.visibility = "visible";
-  elements.buttonElements.playGameButton.style.visibility = "visible";
-}
 
 function audioHandler() {
-  elements.audioElements.button_sound.volume = 0.08;
-  elements.audioElements.levelUp_sound.volume = 0.1;
-  elements.audioElements.main_theme.volume = 0.02;
+  elements.audioElements.button_sound.volume = 1;
+  elements.audioElements.levelUp_sound.volume = 1;
+  elements.audioElements.main_theme.volume = 0.5;
   elements.audioElements.main_theme.loop = true;
-  elements.audioElements.day_ambience.volume = 0.05;
+  elements.audioElements.day_ambience.volume = 0.4;
   elements.audioElements.day_ambience.loop = true;
-  elements.audioElements.game_over.volume = 0.05;
+  elements.audioElements.game_over.volume = 0.5;
 }
+
+/* To-do
+- require user input to start game
+- finish animations
+  - play(fighting) animation
+  - no animation when sleeping
+  - eating animation
+- fix issue with feed/play buttons displaying on death
+- add restart button
+- add settings tab & rules tab
+  - in settings tab
+    - checkboxe for audio
+    - music slider?
+- xp counter
+  - level up at xp values instead of time
+*/
