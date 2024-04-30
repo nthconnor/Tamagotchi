@@ -1,43 +1,54 @@
-const body = document.querySelector("body");
-const game = document.getElementById("game");
-const spriteSheet = document.getElementById("spriteSheet");
-const spriteText = document.getElementById("spriteText");
-const spriteClass = document.querySelector(".spriteClass");
-const sprite_1 = document.getElementById("sprite_1");
-const sprite_2 = document.getElementById("sprite_2");
-const sprite_3 = document.getElementById("sprite_3");
-const sprite_4 = document.getElementById("sprite_4");
-const background = document.getElementById("background");
-const timer = document.getElementById("timer");
-const stats = document.getElementById("stats");
-const icons = document.querySelector(".icon");
-const name_level = document.getElementById("name_level");
-const userInputDiv = document.getElementById("userInputDiv");
-const buttonDiv = document.getElementById("buttonDiv");
-const startButton = document.getElementById("startButton");
-const nameInput = document.getElementById("username");
-const nameText = document.getElementById("nameText");
-const levelText = document.getElementById("levelText");
-const hungerText = document.getElementById("hungerText");
-const sleepyText = document.getElementById("sleepyText");
-const boredomText = document.getElementById("boredomText");
-const lightButton = document.getElementById("lightButton");
-const moonIcon = document.getElementById("moon");
-const sunIcon = document.getElementById("sun");
-// const lightButtonText = document.getElementById("onOff");
-const feedButton = document.getElementById("feedButton");
-const playButton = document.getElementById("playButton");
-const playGameButton = document.getElementById("playGameButton")
-const welcomeScreen = document.querySelector(".welcomeScreen");
-const main_theme = new Audio("./assets/main_theme.mp3");
-const day_ambience = new Audio("./assets/day_ambience.mp3");
-const playButtonSound = new Audio("./assets/bass_hit.mp3")
-const levelUp_sound = new Audio("./assets/level_sound.mp3")
-const button_sound = new Audio("./assets/button_sound.mp3");
+const elements = {
+  body: document.querySelector("body"),
+  game: document.getElementById("game"),
+  welcomeScreen: document.querySelector(".welcomeScreen"),
+  background: document.getElementById("background"),
+  userInputDiv: document.getElementById("userInputDiv"),
+  spriteElements: {
+    spriteSheet: document.getElementById("spriteSheet"),
+    spriteText: document.getElementById("spriteText"),
+    spriteClass: document.querySelector(".spriteClass"),
+    sprites: {
+      sprite_1: document.getElementById("sprite_1"),
+      sprite_2: document.getElementById("sprite_2"),
+      sprite_3: document.getElementById("sprite_3"),
+      sprite_4: document.getElementById("sprite_4"),
+    },
+  },
+  statElements: {
+    timer: document.getElementById("timer"),
+    stats: document.getElementById("stats"),
+    name_level: document.getElementById("name_level"),
+    nameInput: document.getElementById("username"),
+    nameText: document.getElementById("nameText"),
+    levelText: document.getElementById("levelText"),
+    hungerText: document.getElementById("hungerText"),
+    sleepyText: document.getElementById("sleepyText"),
+    boredomText: document.getElementById("boredomText"),
+  },
+  buttonElements: {
+    buttonDiv: document.getElementById("buttonDiv"),
+    startButton: document.getElementById("startButton"),
+    lightButton: document.getElementById("lightButton"),
+    feedButton: document.getElementById("feedButton"),
+    playButton: document.getElementById("playButton"),
+    playGameButton: document.getElementById("playGameButton"),
+    icons: document.querySelector(".icon"),
+    moonIcon: document.getElementById("moon"),
+    sunIcon: document.getElementById("sun"),
+  },
+  audioElements: {
+    main_theme: new Audio("./assets/audio/main_theme.mp3"),
+    day_ambience: new Audio("./assets/audio/day_ambience.mp3"),
+    levelUp_sound: new Audio("./assets/audio/level_sound.mp3"),
+    button_sound: new Audio("./assets/audio/button_sound.mp3"),
+    game_over: new Audio("./assets/audio/game_over.mp3"),
+  },
+};
 let gameRunning;
 let seconds;
 let minutes;
-let myTamagotchi;
+// let myTamagotchi;
 let lights;
 let levelInterval;
 let hungerInterval;
@@ -56,8 +67,7 @@ class Tamagotchi {
   }
   levelUp() {
     if (gameRunning) {
-      levelUp_sound.play();
-      levelUp_sound.volume = 0.4;
+      elements.audioElements.levelUp_sound.play();
     }
     this.level += 1;
     this.updateSprite();
@@ -69,9 +79,8 @@ class Tamagotchi {
   hungerUp() {
     this.hunger += 1;
     this.updateStats();
-    // statColors("hunger");
     if (this.hunger > 0) {
-      hungerText.style.visibility = "visible";
+      elements.statElements.hungerText.style.visibility = "visible";
     }
     if (!gameRunning) {
       return;
@@ -81,10 +90,9 @@ class Tamagotchi {
     if (lights === "on") {
       this.sleepiness += 1;
       this.updateStats();
-      // statColors("sleepiness");
     }
     if (this.sleepiness > 0) {
-      sleepyText.style.visibility = "visible";
+      elements.statElements.sleepyText.style.visibility = "visible";
     }
     if (!gameRunning) {
       return;
@@ -93,9 +101,8 @@ class Tamagotchi {
   boredomUp() {
     this.boredom += 1;
     this.updateStats();
-    // statColors("boredom");
     if (this.boredom > 0) {
-      boredomText.style.visibility = "visible";
+      elements.statElements.boredomText.style.visibility = "visible";
     }
     if (!gameRunning) {
       return;
@@ -123,27 +130,33 @@ class Tamagotchi {
   }
   dead() {
     if (!gameRunning) {
-      sprite_1.classList.remove("idle");
-      sprite_2.classList.remove("idle");
-      sprite_3.classList.remove("idle");
-      sprite_4.classList.remove("idle");
-      sprite_1.classList.add("dead");
-      sprite_2.classList.add("dead");
-      sprite_3.classList.add("dead");
-      sprite_4.classList.add("dead");
-      spriteText.style.visibility = 'visible'
-      spriteText.innerHTML = '*argh*'
-      setTimeout(() => {spriteText.style.visibility = 'hidden'}, 1000)
+      elements.spriteElements.sprites.sprite_1.classList.remove("idle");
+      elements.spriteElements.sprites.sprite_2.classList.remove("idle");
+      elements.spriteElements.sprites.sprite_3.classList.remove("idle");
+      elements.spriteElements.sprites.sprite_4.classList.remove("idle");
+      elements.spriteElements.sprites.sprite_1.classList.add("dead");
+      elements.spriteElements.sprites.sprite_2.classList.add("dead");
+      elements.spriteElements.sprites.sprite_3.classList.add("dead");
+      elements.spriteElements.sprites.sprite_4.classList.add("dead");
+      elements.spriteElements.spriteText.style.visibility = "visible";
+      elements.spriteElements.spriteText.innerHTML = "*argh*";
+      elements.audioElements.game_over.play();
+      elements.audioElements.day_ambience.pause();
+      elements.audioElements.main_theme.pause();
+      elements.buttonElements.buttonDiv.style.visibility = "hidden";
+      setTimeout(() => {
+        elements.spriteElements.spriteText.style.visibility = "hidden";
+      }, 1000);
     }
   }
   updateStats() {
     if (!gameRunning) {
       return;
     }
-    levelText.innerHTML = this.level;
-    hungerText.innerHTML = this.hunger;
-    sleepyText.innerHTML = this.sleepiness;
-    boredomText.innerHTML = this.boredom;
+    elements.statElements.levelText.innerHTML = this.level;
+    elements.statElements.hungerText.innerHTML = this.hunger;
+    elements.statElements.sleepyText.innerHTML = this.sleepiness;
+    elements.statElements.boredomText.innerHTML = this.boredom;
     statColors("hunger");
     statColors("sleepiness");
     statColors("boredom");
@@ -153,16 +166,16 @@ class Tamagotchi {
   updateSprite() {
     if (gameRunning) {
       if (this.level === 1) {
-        sprite_1.style.visibility = "visible";
+        elements.spriteElements.sprites.sprite_1.style.visibility = "visible";
       } else if (this.level === 2) {
-        sprite_1.style.visibility = "hidden";
-        sprite_2.style.visibility = "visible";
+        elements.spriteElements.sprites.sprite_1.style.visibility = "hidden";
+        elements.spriteElements.sprites.sprite_2.style.visibility = "visible";
       } else if (this.level === 3) {
-        sprite_2.style.visibility = "hidden";
-        sprite_3.style.visibility = "visible";
+        elements.spriteElements.sprites.sprite_2.style.visibility = "hidden";
+        elements.spriteElements.sprites.sprite_3.style.visibility = "visible";
       } else {
-        sprite_3.style.visibility = "hidden";
-        sprite_4.style.visibility = "visible";
+        elements.spriteElements.sprites.sprite_3.style.visibility = "hidden";
+        elements.spriteElements.sprites.sprite_4.style.visibility = "visible";
       }
     } else {
       return;
@@ -174,22 +187,17 @@ audioHandler();
 startScreen();
 toggleDarkMode("off");
 // -----------------
-
 // buttons ---------
 startButton.onclick = function () {
   startGame();
-  button_sound.play();
-  // day_ambience.volume = 0.03;
-  // day_ambience.loop = true;
-  day_ambience.play();
-  // main_theme.volume = 0.1;
-  main_theme.play();
-  // main_theme.loop = true;
-
-}
+  elements.audioElements.button_sound.play();
+  elements.audioElements.day_ambience.play();
+  elements.audioElements.main_theme.play();
+};
 lightButton.onclick = function () {
   toggleDarkMode("on");
   hideButtons();
+  elements.audioElements.button_sound.play();
   if (lights === "off") {
     // delay start of sleepingInterval by 1 second
     // setTimeout(
@@ -206,16 +214,16 @@ lightButton.onclick = function () {
 };
 feedButton.onclick = function () {
   myTamagotchi.feed();
+  elements.audioElements.button_sound.play();
 };
 playButton.onclick = function () {
   myTamagotchi.play();
+  elements.audioElements.button_sound.play();
 };
 playGameButton.onclick = function () {
   playGame();
-  // button_sound.play();
-  // playButtonSound.volume = 0.1;
-  playButtonSound.play();
-}
+  elements.audioElements.button_sound.play();
+};
 // ------------------
 
 // Create a function that will update stat values at randomized intervals
@@ -228,15 +236,15 @@ function statIntervals() {
     myTamagotchi.hungerUp();
     myTamagotchi.updateStats();
     // endCondition();
-  }, Math.floor(Math.random() * (4000 - 6000) + 4000));
+  }, 10000);
   sleepinessInterval = setInterval(function () {
     myTamagotchi.sleepinessUp();
     // endCondition();
-  }, Math.floor(Math.random() * (4000 - 6000) + 4000));
+  }, Math.floor(Math.random() * (10000 - 5000 + 1) + 5000));
   boredomInterval = setInterval(function () {
     myTamagotchi.boredomUp();
     // endCondition();
-  }, Math.floor(Math.random() * (4000 - 6000) + 4000));
+  }, Math.floor(Math.random() * (10000 - 5000 + 1) + 5000));
 }
 
 // use this somewhere it's repeatedly checked for the loss condition
@@ -252,27 +260,24 @@ function endCondition() {
 
 // function to run on 'start' button click
 function startGame() {
-  const name = nameInput.value;
+  const name = elements.statElements.nameInput.value;
   myTamagotchi = new Tamagotchi(name);
-  spriteClass.classList.remove("dead");
-  spriteClass.classList.add("idle");
+  elements.spriteElements.spriteClass.classList.remove("dead");
+  elements.spriteElements.spriteClass.classList.add("idle");
   // turn on display of game info
   (function displayOn() {
-    background.style.visibility = "visible";
-    timer.style.visibility = "visible";
-    spriteSheet.style.visibility = "visible";
-    sprite_1.style.visibility = "visible";
-    sprite_2.style.visibility = "hidden";
-    sprite_3.style.visibility = "hidden";
-    sprite_4.style.visibility = "hidden";
-    stats.style.visibility = "visible";
-    name_level.style.visibility = "visible";
-    buttonDiv.style.visibility = "visible";
-    userInputDiv.style.visibility = "hidden";
-    hungerText.style.visibility = "hidden";
-    sleepyText.style.visibility = "hidden";
-    boredomText.style.visibility = "hidden";
-    spriteText.style.visibility = "hidden";
+    elements.background.style.visibility = "visible";
+    elements.statElements.timer.style.visibility = "visible";
+    elements.spriteElements.spriteSheet.style.visibility = "visible";
+    elements.spriteElements.sprites.sprite_1.style.visibility = "visible";
+    elements.spriteElements.sprites.sprite_2.style.visibility = "hidden";
+    elements.spriteElements.sprites.sprite_3.style.visibility = "hidden";
+    elements.spriteElements.sprites.sprite_4.style.visibility = "hidden";
+    elements.statElements.stats.style.visibility = "visible";
+    elements.statElements.name_level.style.visibility = "visible";
+    elements.buttonElements.buttonDiv.style.visibility = "visible";
+    elements.userInputDiv.style.visibility = "hidden";
+    elements.spriteElements.spriteText.style.visibility = "hidden";
   })();
   // initialize all stat values, gameRunning to true
   (function initialize() {
@@ -280,13 +285,12 @@ function startGame() {
     minutes = 0;
     gameRunning = true;
     lights = "on";
-    nameText.innerHTML = myTamagotchi.name;
-    levelText.innerHTML = myTamagotchi.level;
-    hungerText.innerHTML = myTamagotchi.hunger;
-    sleepyText.innerHTML = myTamagotchi.sleepiness;
-    boredomText.innerHTML = myTamagotchi.boredom;
+    elements.statElements.nameText.innerHTML = myTamagotchi.name;
+    elements.statElements.levelText.innerHTML = myTamagotchi.level;
+    elements.statElements.hungerText.innerHTML = myTamagotchi.hunger;
+    elements.statElements.sleepyText.innerHTML = myTamagotchi.sleepiness;
+    elements.statElements.boredomText.innerHTML = myTamagotchi.boredom;
     initializeAnimations();
-    // lightButtonText.innerHTML = "day";
   })();
   // starting time and stat intervals on game start
   startTimer();
@@ -294,7 +298,7 @@ function startGame() {
 }
 
 // function to "type out" intro text
-//refactor this to take inputs of text!
+//recreate to take parameters
 function chooseName() {
   let i = 0;
   let text = "choose a name";
@@ -338,13 +342,12 @@ function changeTime() {
     minutes += 1;
   } else {
     seconds++;
-    console.log(gameRunning);
   }
   console.log(seconds);
   if (seconds < 10) {
-    document.getElementById("timer").innerHTML = minutes + ":0" + seconds;
+    elements.statElements.timer.innerHTML = minutes + ":0" + seconds;
   } else {
-    document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+    elements.statElements.timer.innerHTML = minutes + ":" + seconds;
   }
   if (!gameRunning) {
     clearInterval(timeInterval);
@@ -355,166 +358,166 @@ function changeTime() {
 function toggleDarkMode(on_off) {
   if (lights === "on") {
     lights = "off";
-    moonIcon.style.display = "none";
-    sunIcon.style.display = "inline-block";
+    elements.buttonElements.moonIcon.style.display = "none";
+    elements.buttonElements.sunIcon.style.display = "inline-block";
     if (gameRunning) {
       setTimeout(() => {
-        spriteText.style.visibility = "visible";
-        spriteText.innerText = "zzz";
+        elements.spriteElements.spriteText.style.visibility = "visible";
+        elements.spriteElements.spriteText.innerText = "zzz";
       }, 100);
     }
     // lightButtonText.innerHTML = "night";
   } else {
     lights = "on";
-    sunIcon.style.display = "none";
-    moonIcon.style.display = "inline-block";
-    spriteText.style.visibility = "hidden";
+    elements.buttonElements.sunIcon.style.display = "none";
+    elements.buttonElements.moonIcon.style.display = "inline-block";
+    elements.spriteElements.spriteText.style.visibility = "hidden";
     // lightButtonText.innerHTML = "day";
   }
   if (on_off === "on") {
-    body.classList.toggle("dark_mode");
-    game.classList.toggle("dark_mode");
-    background.classList.toggle("dark_mode");
-    stats.classList.toggle("dark_mode");
-    timer.classList.toggle("dark_mode");
-    name_level.classList.toggle("dark_mode");
-    icons.classList.toggle("dark_mode");
+    elements.body.classList.toggle("dark_mode");
+    elements.game.classList.toggle("dark_mode");
+    elements.background.classList.toggle("dark_mode");
+    elements.statElements.stats.classList.toggle("dark_mode");
+    elements.statElements.timer.classList.toggle("dark_mode");
+    elements.statElements.name_level.classList.toggle("dark_mode");
+    elements.buttonElements.icons.classList.toggle("dark_mode");
   }
   if (on_off === "off") {
-    body.classList.remove("dark_mode");
-    game.classList.remove("dark_mode");
-    background.classList.remove("dark_mode");
-    stats.classList.remove("dark_mode");
-    timer.classList.remove("dark_mode");
-    name_level.classList.remove("dark_mode");
-    icons.classList.remove("dark_mode");
+    elements.body.classList.remove("dark_mode");
+    elements.game.classList.remove("dark_mode");
+    elements.background.classList.remove("dark_mode");
+    elements.statElements.stats.classList.remove("dark_mode");
+    elements.statElements.timer.classList.remove("dark_mode");
+    elements.statElements.name_level.classList.remove("dark_mode");
+    elements.buttonElements.icons.classList.remove("dark_mode");
   }
 }
 
 function hideButtons() {
   if (lights === "off") {
-    feedButton.style.visibility = "hidden";
-    playButton.style.visibility = "hidden";
+    elements.buttonElements.feedButton.style.visibility = "hidden";
+    elements.buttonElements.playButton.style.visibility = "hidden";
   } else {
-    feedButton.style.visibility = "visible";
-    playButton.style.visibility = "visible";
+    elements.buttonElements.feedButton.style.visibility = "visible";
+    elements.buttonElements.playButton.style.visibility = "visible";
   }
 }
 
 function statColors(stat) {
   if (myTamagotchi[stat] === 1) {
     if (stat === "hunger") {
-      hungerText.style.color = "#42D921";
+      elements.statElements.hungerText.style.color = "#42D921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#42D921";
+      elements.statElements.sleepyText.style.color = "#42D921";
     } else {
-      boredomText.style.color = "#42D921";
+      elements.statElements.boredomText.style.color = "#42D921";
     }
   } else if (myTamagotchi[stat] === 2) {
     if (stat === "hunger") {
-      hungerText.style.color = "#72D921";
+      elements.statElements.hungerText.style.color = "#72D921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#72D921";
+      elements.statElements.sleepyText.style.color = "#72D921";
     } else {
-      boredomText.style.color = "#72D921";
+      elements.statElements.boredomText.style.color = "#72D921";
     }
   } else if (myTamagotchi[stat] === 3) {
     if (stat === "hunger") {
-      hungerText.style.color = "#8BD921";
+      elements.statElements.hungerText.style.color = "#8BD921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#8BD921";
+      elements.statElements.sleepyText.style.color = "#8BD921";
     } else {
-      boredomText.style.color = "#8BD921";
+      elements.statElements.boredomText.style.color = "#8BD921";
     }
   } else if (myTamagotchi[stat] === 4) {
     if (stat === "hunger") {
-      hungerText.style.color = "#A2D921";
+      elements.statElements.hungerText.style.color = "#A2D921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#A2D921";
+      elements.statElements.sleepyText.style.color = "#A2D921";
     } else {
-      boredomText.style.color = "#A2D921";
+      elements.statElements.boredomText.style.color = "#A2D921";
     }
   } else if (myTamagotchi[stat] === 5) {
     if (stat === "hunger") {
-      hungerText.style.color = "#C4D921";
+      elements.statElements.hungerText.style.color = "#C4D921";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#C4D921";
+      elements.statElements.sleepyText.style.color = "#C4D921";
     } else {
-      boredomText.style.color = "#C4D921";
+      elements.statElements.boredomText.style.color = "#C4D921";
     }
   } else if (myTamagotchi[stat] === 6) {
     if (stat === "hunger") {
-      hungerText.style.color = "#D9CD21";
+      elements.statElements.hungerText.style.color = "#D9CD21";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#D9CD21";
+      elements.statElements.sleepyText.style.color = "#D9CD21";
     } else {
-      boredomText.style.color = "#D9CD21";
+      elements.statElements.boredomText.style.color = "#D9CD21";
     }
   } else if (myTamagotchi[stat] === 7) {
     if (stat === "hunger") {
-      hungerText.style.color = "#D99821";
+      elements.statElements.hungerText.style.color = "#D99821";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#D99821";
+      elements.statElements.sleepyText.style.color = "#D99821";
     } else {
-      boredomText.style.color = "#D99821";
+      elements.statElements.boredomText.style.color = "#D99821";
     }
   } else if (myTamagotchi[stat] === 8) {
     if (stat === "hunger") {
-      hungerText.style.color = "#D97321";
+      elements.statElements.hungerText.style.color = "#D97321";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#D97321";
+      elements.statElements.sleepyText.style.color = "#D97321";
     } else {
-      boredomText.style.color = "#D97321";
+      elements.statElements.boredomText.style.color = "#D97321";
     }
   } else if (myTamagotchi[stat] === 9) {
     if (stat === "hunger") {
-      hungerText.style.color = "#D95421";
+      elements.statElements.hungerText.style.color = "#D95421";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#D95421";
+      elements.statElements.sleepyText.style.color = "#D95421";
     } else {
-      boredomText.style.color = "#D95421";
+      elements.statElements.boredomText.style.color = "#D95421";
     }
   } else if (myTamagotchi[stat] === 10) {
     if (stat === "hunger") {
-      hungerText.style.color = "#FC1313";
+      elements.statElements.hungerText.style.color = "#FC1313";
     } else if (stat === "sleepiness") {
-      sleepyText.style.color = "#FC1313";
+      elements.statElements.sleepyText.style.color = "#FC1313";
     } else {
-      boredomText.style.color = "#FC1313";
+      elements.statElements.boredomText.style.color = "#FC1313";
     }
   }
 }
 
 function initializeAnimations() {
-  sprite_1.classList.add("spriteClass")
-  sprite_2.classList.add("spriteClass")
-  sprite_3.classList.add("spriteClass")
-  sprite_4.classList.add("spriteClass")
-  sprite_1.classList.remove("dead");
-  sprite_2.classList.remove("dead");
-  sprite_3.classList.remove("dead");
-  sprite_4.classList.remove("dead");
+  elements.spriteElements.sprites.sprite_1.classList.add("spriteClass");
+  elements.spriteElements.sprites.sprite_2.classList.add("spriteClass");
+  elements.spriteElements.sprites.sprite_3.classList.add("spriteClass");
+  elements.spriteElements.sprites.sprite_4.classList.add("spriteClass");
+  elements.spriteElements.sprites.sprite_1.classList.remove("dead");
+  elements.spriteElements.sprites.sprite_2.classList.remove("dead");
+  elements.spriteElements.sprites.sprite_3.classList.remove("dead");
+  elements.spriteElements.sprites.sprite_4.classList.remove("dead");
 }
 
 function playGame() {
-  userInputDiv.style.display = 'flex'
-  welcomeScreen.style.display = 'none'
-  playGameButton.style.display = 'none'
+  elements.userInputDiv.style.display = "flex";
+  elements.welcomeScreen.style.display = "none";
+  elements.buttonElements.playGameButton.style.display = "none";
   chooseName();
 }
 
 function startScreen() {
-  userInputDiv.style.display = 'none'
-  welcomeScreen.style.visibility = 'visible'
-  playGameButton.style.visibility = 'visible'
+  elements.userInputDiv.style.display = "none";
+  elements.welcomeScreen.style.visibility = "visible";
+  elements.buttonElements.playGameButton.style.visibility = "visible";
 }
 
 function audioHandler() {
-  button_sound.volume = 0.1;
-  playButtonSound.volume = 0.3;
-  main_theme.volume = 0.1;
-main_theme.loop = true;
-  day_ambience.volume = 0.03;
-  day_ambience.loop = true;
-
+  elements.audioElements.button_sound.volume = 0.08;
+  elements.audioElements.levelUp_sound.volume = 0.1;
+  elements.audioElements.main_theme.volume = 0.02;
+  elements.audioElements.main_theme.loop = true;
+  elements.audioElements.day_ambience.volume = 0.05;
+  elements.audioElements.day_ambience.loop = true;
+  elements.audioElements.game_over.volume = 0.05;
 }
