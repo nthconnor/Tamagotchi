@@ -27,6 +27,8 @@ const sunIcon = document.getElementById("sun");
 // const lightButtonText = document.getElementById("onOff");
 const feedButton = document.getElementById("feedButton");
 const playButton = document.getElementById("playButton");
+const playGameButton = document.getElementById("playGameButton")
+const welcomeScreen = document.querySelector(".welcomeScreen");
 let gameRunning;
 let seconds;
 let minutes;
@@ -120,6 +122,9 @@ class Tamagotchi {
       sprite_2.classList.add("dead");
       sprite_3.classList.add("dead");
       sprite_4.classList.add("dead");
+      spriteText.style.visibility = 'visible'
+      spriteText.innerHTML = '*argh*'
+      setTimeout(() => {spriteText.style.visibility = 'hidden'}, 1000)
     }
   }
   updateStats() {
@@ -155,13 +160,13 @@ class Tamagotchi {
     }
   }
 }
-
-chooseName();
+// run on page load
+startScreen();
 toggleDarkMode("off");
-// buttons
-startButton.onclick = startGame;
+// -----------------
 
-// lowers sleepiness when dark mode is toggled
+// buttons ---------
+startButton.onclick = startGame;
 lightButton.onclick = function () {
   toggleDarkMode("on");
   hideButtons();
@@ -179,14 +184,14 @@ lightButton.onclick = function () {
     }, 1000);
   } else clearInterval(sleepingInterval);
 };
-
 feedButton.onclick = function () {
   myTamagotchi.feed();
 };
-
 playButton.onclick = function () {
   myTamagotchi.play();
 };
+playGameButton.onclick = playGame;
+// ------------------
 
 // Create a function that will update stat values at randomized intervals
 function statIntervals() {
@@ -464,4 +469,17 @@ function initializeAnimations() {
   sprite_2.classList.remove("dead");
   sprite_3.classList.remove("dead");
   sprite_4.classList.remove("dead");
+}
+
+function playGame() {
+  userInputDiv.style.display = 'flex'
+  welcomeScreen.style.display = 'none'
+  playGameButton.style.display = 'none'
+  chooseName();
+}
+
+function startScreen() {
+  userInputDiv.style.display = 'none'
+  welcomeScreen.style.visibility = 'visible'
+  playGameButton.style.visibility = 'visible'
 }
