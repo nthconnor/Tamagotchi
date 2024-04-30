@@ -1,0 +1,12 @@
+demo
+rules 
+    - goal is to reach max armor (current: gold)
+    - stats go up at random intervals
+        - playing increases hunger
+        - eating increases sleepiness
+        - sleeping disables ability to play or feed your knight
+            - if any stat reaches 10 your knight dies
+
+    - you level up every 30 seconds
+        - acquire new set of armor
+    

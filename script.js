@@ -201,8 +201,8 @@ playGameButton.onclick = function () {
 startButton.onclick = function () {
   startGame();
   elements.audioElements.button_sound.play();
-  elements.audioElements.day_ambience.play();
-  elements.audioElements.main_theme.play();
+  // elements.audioElements.day_ambience.play();
+  // elements.audioElements.main_theme.play();
 };
 lightButton.onclick = function () {
   toggleDarkMode("on");
@@ -294,7 +294,7 @@ function statIntervals() {
   levelInterval = setInterval(function () {
     myTamagotchi.levelUp();
     // endCondition();
-  }, 30000);
+  }, 15000); // change back to 30000 for live version
   hungerInterval = setInterval(function () {
     myTamagotchi.hungerUp();
     myTamagotchi.updateStats();
@@ -359,7 +359,7 @@ function chooseName() {
 
 // time controllers
 function startTimer() {
-  timeInterval = setInterval(changeTime, 1000);
+  timeInterval = setInterval(changeTime, 500); // change back to 1000 for live version
 }
 function changeTime() {
   if (seconds === 59) {
@@ -532,11 +532,11 @@ function statColors(stat) {
 function audioHandler() {
   elements.audioElements.button_sound.volume = 1;
   elements.audioElements.levelUp_sound.volume = 1;
-  elements.audioElements.main_theme.volume = 0.5;
+  elements.audioElements.main_theme.volume = 0.1;
   elements.audioElements.main_theme.loop = true;
-  elements.audioElements.day_ambience.volume = 0.4;
+  elements.audioElements.day_ambience.volume = 0.1;
   elements.audioElements.day_ambience.loop = true;
-  elements.audioElements.game_over.volume = 0.5;
+  elements.audioElements.game_over.volume = 0.1;
 }
 
 /* To-do
