@@ -201,8 +201,8 @@ playGameButton.onclick = function () {
 startButton.onclick = function () {
   startGame();
   elements.audioElements.button_sound.play();
-  // elements.audioElements.day_ambience.play();
-  // elements.audioElements.main_theme.play();
+  elements.audioElements.day_ambience.play();
+  elements.audioElements.main_theme.play();
 };
 lightButton.onclick = function () {
   toggleDarkMode("on");
@@ -294,7 +294,7 @@ function statIntervals() {
   levelInterval = setInterval(function () {
     myTamagotchi.levelUp();
     // endCondition();
-  }, 15000); // change back to 30000 for live version
+  }, 30000);
   hungerInterval = setInterval(function () {
     myTamagotchi.hungerUp();
     myTamagotchi.updateStats();
@@ -359,7 +359,7 @@ function chooseName() {
 
 // time controllers
 function startTimer() {
-  timeInterval = setInterval(changeTime, 500); // change back to 1000 for live version
+  timeInterval = setInterval(changeTime, 1000);
 }
 function changeTime() {
   if (seconds === 59) {
