@@ -29,6 +29,11 @@ const feedButton = document.getElementById("feedButton");
 const playButton = document.getElementById("playButton");
 const playGameButton = document.getElementById("playGameButton")
 const welcomeScreen = document.querySelector(".welcomeScreen");
+const main_theme = new Audio("./assets/main_theme.mp3");
+const day_ambience = new Audio("./assets/day_ambience.mp3");
+const playButtonSound = new Audio("./assets/bass_hit.mp3")
+const levelUp_sound = new Audio("./assets/level_sound.mp3")
+const button_sound = new Audio("./assets/button_sound.mp3");
 let gameRunning;
 let seconds;
 let minutes;
@@ -50,6 +55,10 @@ class Tamagotchi {
     this.boredom = 0;
   }
   levelUp() {
+    if (gameRunning) {
+      levelUp_sound.play();
+      levelUp_sound.volume = 0.4;
+    }
     this.level += 1;
     this.updateSprite();
     this.updateStats();
@@ -161,12 +170,23 @@ class Tamagotchi {
   }
 }
 // run on page load
+audioHandler();
 startScreen();
 toggleDarkMode("off");
 // -----------------
 
 // buttons ---------
-startButton.onclick = startGame;
+startButton.onclick = function () {
+  startGame();
+  button_sound.play();
+  // day_ambience.volume = 0.03;
+  // day_ambience.loop = true;
+  day_ambience.play();
+  // main_theme.volume = 0.1;
+  main_theme.play();
+  // main_theme.loop = true;
+
+}
 lightButton.onclick = function () {
   toggleDarkMode("on");
   hideButtons();
@@ -190,7 +210,12 @@ feedButton.onclick = function () {
 playButton.onclick = function () {
   myTamagotchi.play();
 };
-playGameButton.onclick = playGame;
+playGameButton.onclick = function () {
+  playGame();
+  // button_sound.play();
+  // playButtonSound.volume = 0.1;
+  playButtonSound.play();
+}
 // ------------------
 
 // Create a function that will update stat values at randomized intervals
@@ -482,4 +507,14 @@ function startScreen() {
   userInputDiv.style.display = 'none'
   welcomeScreen.style.visibility = 'visible'
   playGameButton.style.visibility = 'visible'
+}
+
+function audioHandler() {
+  button_sound.volume = 0.1;
+  playButtonSound.volume = 0.3;
+  main_theme.volume = 0.1;
+main_theme.loop = true;
+  day_ambience.volume = 0.03;
+  day_ambience.loop = true;
+
 }

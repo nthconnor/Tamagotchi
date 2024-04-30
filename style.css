@@ -22,7 +22,7 @@ body {
 }
 #pixelKnight {
   font-size: 45px;
-  color: #73a16c;
+  color: #8cc584;
   animation: title 2s infinite alternate linear;
 }
 #rulesButton, #playGameButton, #settingsButton {
@@ -108,7 +108,7 @@ body {
 }
 
 .spriteClass.idle {
-  animation: idle 0.6s steps(5) infinite;
+  animation: idle 0.7s steps(5) infinite alternate;
 }
 
 .spriteClass.dead {
